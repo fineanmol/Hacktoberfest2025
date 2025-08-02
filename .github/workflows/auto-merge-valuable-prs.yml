@@ -1,0 +1,116 @@
+name: ✅ Auto-Merge Valuable PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  auto-merge-valuable:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find all open PRs (with mergeable & files)
+        id: find-prs
+        run: |
+          # Fetch all open PRs, including mergeable status and changed files
+          all_prs=$(gh pr list \
+            --state open \
+            --json number,title,author,mergeable,files \
+            --limit 3000)
+
+          # Store JSON blob as a multiline output
+          echo "all_prs<<EOF" >> $GITHUB_OUTPUT
+          echo "$all_prs"        >> $GITHUB_OUTPUT
+          echo "EOF"             >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-merge non-conflicting PRs
+        run: |
+          # Dump the JSON into a temporary file so jq can parse it
+          echo "${{ steps.find-prs.outputs.all_prs }}" > all_prs.json
+
+          # Loop over each PR entry (encoded in base64)
+          jq -r '.[] | @base64' all_prs.json | while IFS= read -r pr_data; do
+            if [ -z "$pr_data" ]; then
+              continue
+            fi
+
+            pr_json=$(echo "$pr_data" | base64 -d)
+            pr_number=$(echo "$pr_json" | jq -r '.number')
+            pr_title=$(echo "$pr_json" | jq -r '.title')
+            pr_author=$(echo "$pr_json" | jq -r '.author.login')
+            pr_mergeable=$(echo "$pr_json" | jq -r '.mergeable')
+
+            # Skip PRs that only modify contributors/contributorsList.js
+            files_changed=$(echo "$pr_json" | jq -r '.files[].path // empty')
+            if [ -z "$files_changed" ]; then
+              continue
+            fi
+
+            contributors_only=true
+            while IFS= read -r file; do
+              if [ -n "$file" ] && [ "$file" != "contributors/contributorsList.js" ]; then
+                contributors_only=false
+                break
+              fi
+            done <<< "$files_changed"
+
+            if [ "$contributors_only" = "true" ]; then
+              continue
+            fi
+
+            # Only proceed if GitHub says "MERGEABLE"
+            if [ "$pr_mergeable" != "MERGEABLE" ]; then
+              echo "Skipping PR #$pr_number (mergeable=$pr_mergeable)"
+              continue
+            fi
+
+            echo "Processing PR #$pr_number by @$pr_author — \"$pr_title\""
+            echo "mergeable=$pr_mergeable"
+
+            # If the label "valuable-contribution" is missing, add it
+            has_label=$(gh pr view "$pr_number" --json labels \
+              | jq -r '.labels[].name' \
+              | grep -x "valuable-contribution" || echo "")
+
+            if [ -z "$has_label" ]; then
+              echo "Adding label valuable-contribution to PR #$pr_number"
+              gh pr edit "$pr_number" --add-label "valuable-contribution" || true
+            fi
+
+            # Merge the PR and delete its branch
+            echo "Merging PR #$pr_number"
+            if gh pr merge "$pr_number" --merge --delete-branch; then
+              echo "Merged PR #$pr_number"
+              gh pr comment "$pr_number" \
+                --body "Automatically merged. Thank you @$pr_author!" || true
+            else
+              echo "Failed to merge PR #$pr_number"
+            fi
+
+            # Brief pause to avoid rate limits
+            sleep 2
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "Auto-merge run complete"
+          contributor_count=$(grep -c "id:" contributors/contributorsList.js || echo 0)
+          echo "Total lines in contributorsList.js: $contributor_count"
