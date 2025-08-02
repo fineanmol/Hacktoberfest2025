@@ -2458,11 +2458,10 @@ contributors = [
     fullname: "Yajnesh Kumar",
     username: "https://github.com/yajneshkumar790",
   },
-
   {
     id: 428,
-    fullname: "Aviraj Saha",
-    username: "https://github.com/avirsaha",
+    fullname: "Harsh Solanki",
+    username: "https://github.com/harsh-solanki-codes",
   },
 
   {
@@ -2656,5 +2655,4 @@ contributors = [
     fullname: "Inchara J",
     username: "https://github.com/Incharajayaram",
   },
-
 ];
