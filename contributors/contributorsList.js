@@ -2656,5 +2656,9 @@ contributors = [
     fullname: "Inchara J",
     username: "https://github.com/Incharajayaram",
   },
-
+  {
+    id: 471,
+    fullname: "kaRIOz",
+    username: "https://github.com/kaRIOz",
+  },
 ];
