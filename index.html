@@ -32,13 +32,60 @@
         .st0 {
             fill: #FF0844;
         }
+
+        /* Back to Top Button Styles */
+        #back-to-top-btn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #FF0844;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 18px;
+            width: 50px;
+            height: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #back-to-top-btn:hover {
+            background-color: #d90739;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        #back-to-top-btn.mousedown {
+            transform: scale(0.95);
+        }
+
+        #back-to-top-btn.startscrolling {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <!-- Back-to-top Button -->
-    <button id="back-to-top-btn"><i class="fas fa-angle-double-up"></i></button>
+    <button id="back-to-top-btn" title="Go to top">
+        <i class="fa fa-angle-double-up"></i>
+    </button>
+    
     <!--
         __  __              __    __          __                 ____             __
       / / / /____ _ _____ / /__ / /_ ____   / /_   ___   _____ / __/___   _____ / /_
@@ -143,6 +190,7 @@
     <script src="./scripts/menu.js"></script>
     <script src="./contributors/contributorsList.js"></script>
     <script src="./scripts/main.js"></script>
+    <script src="./scripts/scroll.js"></script>
 </body>
 
 </html>

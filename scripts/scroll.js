@@ -1,45 +1,41 @@
-window.onscroll = () => handleScroll();
-const scrollButton = document.getElementById("backToTop");
+// scripts/scroll.js - Fixed Back to Top Button (short & efficient)
+const scrollBtn = document.getElementById("back-to-top-btn");
 
-function handleScroll() {
-  const scrollTop =
-    document.body.scrollTop || document.documentElement.scrollTop;
-  scrollButton.style.display = scrollTop > 150 ? "block" : "none";
+window.onscroll = () => {
+  if (!scrollBtn) return;
+  scrollBtn.style.display =
+    (document.documentElement.scrollTop || document.body.scrollTop) > 150
+      ? "block"
+      : "none";
+};
+
+if (scrollBtn) {
+  ["mousedown", "mouseup"].forEach(evt =>
+    scrollBtn.addEventListener(evt, () =>
+      scrollBtn.classList.toggle("mousedown", evt === "mousedown")
+    )
+  );
+
+  scrollBtn.addEventListener("click", () => {
+    scrollBtn.classList.add("startscrolling");
+    smoothScrollTo(0, 600, () => scrollBtn.classList.remove("startscrolling"));
+  });
 }
 
-scrollButton.addEventListener("click", () => {
-  scrollButton.classList.add("startscrolling");
-  smoothScrollTo(0, 1250, () => {
-    scrollButton.classList.remove("startscrolling");
-  });
-});
-
-scrollButton.addEventListener("mousedown", () => {
-  scrollButton.classList.add("mousedown");
-});
-
-scrollButton.addEventListener("mouseup", () => {
-  scrollButton.classList.remove("mousedown");
-});
-
-function smoothScrollTo(to, duration, callback) {
-  const start = document.documentElement.scrollTop,
+function smoothScrollTo(to, duration, cb) {
+  const start = window.scrollY || document.documentElement.scrollTop,
     change = to - start,
     increment = 20;
   let currentTime = 0;
 
-  function animateScroll() {
+  function animate() {
     currentTime += increment;
     const val = Math.easeInOutQuad(currentTime, start, change, duration);
-    document.documentElement.scrollTop = val;
-
-    if (currentTime < duration) {
-      setTimeout(animateScroll, increment);
-    } else if (callback && typeof callback === "function") {
-      callback();
-    }
+    window.scrollTo(0, val);
+    if (currentTime < duration) setTimeout(animate, increment);
+    else if (cb) cb();
   }
-  animateScroll();
+  animate();
 }
 
 Math.easeInOutQuad = (t, b, c, d) => {
