@@ -82,8 +82,8 @@
 <body>
 
     <!-- Back-to-top Button -->
-    <button id="back-to-top-btn" title="Go to top">
-        <i class="fa fa-angle-double-up"></i>
+    <button id="back-to-top-btn" title="Go to top" aria-label="Back to top">
+        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
     </button>
     
     <!--
@@ -129,7 +129,7 @@
                 <p class="rubberBand delay-4s">Add yourself to the list if you contribute.</p>
                 <div class="inputs mr-3">
                     <i class="fa fa-search"></i>
-                    <input type="text" id="search" class="form-control" placeholder="Search Contributors..">
+                    <input type="text" id="search" class="form-control" placeholder="Search Contributors.." aria-label="Search contributors" aria-controls="contributors">
                 </div>
             </div>
             <div>
@@ -141,19 +141,19 @@
         </div>
         <div class="container-fluid">
             <!-- Contributors will be displayed here -->
-            <div class="box mx-auto my-5 justify-content-center" id="contributors" data-aos="zoom-in-down"></div>
+            <div class="box mx-auto my-5 justify-content-center" id="contributors" role="list" data-aos="zoom-in-down"></div>
         </div>
     </div>
 
     <div class="box mx-auto my-5 justify-content-center" id="box">
-        <a data-aos="zoom-in-down" class="btn btn-outline-secondary btn-lg load-more" id="loadMore"><u>Load More</u></a>
+        <a data-aos="zoom-in-down" class="btn btn-outline-secondary btn-lg load-more" id="loadMore" role="button" aria-label="Load more contributors"><u>Load More</u></a>
     </div>
 
     <!-- Footer -->
     <div class="footer mt-auto py-3 bg-light text-center">
         <div class="container">
             <span class="text-muted">
-                <div id="stats"></div>
+                <div id="stats" aria-live="polite"></div>
             </span>
         </div>
     </div>
