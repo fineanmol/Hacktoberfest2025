@@ -33,14 +33,10 @@ function getGithubUsernameFromUrl(possibleUrl) {
 function createAvatarImg(username) {
   const img = document.createElement("img");
   img.loading = "lazy";
-  if (username) {
-    img.src = `https://avatars.githubusercontent.com/${username}`;
-    img.alt = `${username}'s avatar`;
-  } else {
-    // Fallback placeholder avatar
-    img.src = "https://avatars.githubusercontent.com/ghost";
-    img.alt = "avatar";
-  }
+  img.dataset.src = username
+    ? `https://avatars.githubusercontent.com/${username}`
+    : "https://avatars.githubusercontent.com/ghost";
+  img.alt = username ? `${username}'s avatar` : "avatar";
   return img;
 }
 
@@ -134,6 +130,10 @@ function render(array, options = { paginate: true }) {
     anchor.setAttribute("id", item.id);
     container.appendChild(anchor);
   });
+  // After rendering batch, invoke lazy loading for avatars
+  setupLazyLoadImages();
+  // And ensure infinite scroll sentinel is available
+  setupLoadMoreOnScroll();
 }
 
 // Load contributors after document loads.
@@ -175,6 +175,57 @@ document.querySelectorAll("a.box-item").forEach((con) => {
     con.appendChild(createAvatarImg(username));
   }
 });
+setupLazyLoadImages();
+setupLoadMoreOnScroll();
+
+// -------- Lazy loading avatars with IntersectionObserver --------
+function setupLazyLoadImages() {
+  const images = document.querySelectorAll("a.box-item img[data-src]");
+  if (!("IntersectionObserver" in window)) {
+    images.forEach((img) => {
+      img.src = img.dataset.src;
+      img.removeAttribute("data-src");
+    });
+    return;
+  }
+  const imgObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.removeAttribute("data-src");
+        observer.unobserve(img);
+      }
+    });
+  }, { rootMargin: "100px 0px", threshold: 0.01 });
+  images.forEach((img) => imgObserver.observe(img));
+}
+
+// -------- Infinite scroll: auto load more when near bottom --------
+function setupLoadMoreOnScroll() {
+  const loadMoreBtn = document.getElementById("loadMore");
+  if (!loadMoreBtn) return;
+  let sentinel = document.getElementById("load-more-sentinel");
+  if (!sentinel) {
+    sentinel = document.createElement("div");
+    sentinel.id = "load-more-sentinel";
+    sentinel.style.height = "1px";
+    const container = document.getElementById("contributors");
+    if (container) container.appendChild(sentinel);
+  }
+  if (!("IntersectionObserver" in window)) return;
+  const totalPages = Math.ceil(contributors.length / pageSize);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (currentPage < totalPages && (!searchbox || searchbox.value === "")) {
+          loadMore();
+        }
+      }
+    });
+  }, { rootMargin: "200px 0px", threshold: 0 });
+  observer.observe(sentinel);
+}
 
 function debounce(fn, delay) {
   let timer;
