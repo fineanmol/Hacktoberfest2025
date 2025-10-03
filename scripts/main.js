@@ -67,7 +67,9 @@ function createContributorAnchor(item) {
 // Variables
 const searchbox = document.getElementById("search");
 let searchResult = null;
-let initialContributorsNumber = 72;
+// Pagination state
+let pageSize = 60;
+let currentPage = 1;
 
 // Get the current year dynamically
 const currentYear = new Date().getFullYear();
@@ -115,24 +117,27 @@ function filterUsers(str = "ContributorName", array) {
 /**
  * Renders the contributors on the page.
  * @param {Array} array - The array of contributors to render.
+ * @param {Object} options - render options
+ * @param {boolean} options.paginate - whether to paginate the array
  */
-function render(array) {
+function render(array, options = { paginate: true }) {
   const container = document.getElementById("contributors");
   if (!container) {
     console.warn("Contributors container not found");
     return;
   }
-  array.forEach((item) => {
+  const list = options.paginate
+    ? array.slice(0, currentPage * pageSize)
+    : array;
+  list.forEach((item) => {
     const anchor = createContributorAnchor(item);
     anchor.setAttribute("id", item.id);
-    if (item.id <= initialContributorsNumber) {
-      container.appendChild(anchor);
-    }
+    container.appendChild(anchor);
   });
 }
 
 // Load contributors after document loads.
-render(contributors);
+render(contributors, { paginate: true });
 
 /**
  * Loads more contributors when "Load More" button is clicked.
@@ -140,15 +145,16 @@ render(contributors);
 function loadMore() {
   const container = document.getElementById("contributors");
   if (!container) return;
-  if (initialContributorsNumber >= contributors.length) {
-    render(contributors);
+  const totalPages = Math.ceil(contributors.length / pageSize);
+  if (currentPage >= totalPages) {
+    render(contributors, { paginate: true });
   } else {
-    initialContributorsNumber += 84;
+    currentPage += 1;
     container.innerHTML = "<div class='text-center' id='loading'>Loading...</div>";
-    render(contributors);
+    render(contributors, { paginate: true });
     const loading = document.getElementById("loading");
     if (loading) loading.setAttribute("hidden", true);
-    if (initialContributorsNumber >= contributors.length) {
+    if (currentPage >= totalPages) {
       const loadMoreEl = document.getElementById("loadMore");
       if (loadMoreEl) loadMoreEl.setAttribute("hidden", true);
     }
@@ -194,12 +200,16 @@ if (searchbox) {
       if (!container) return;
       container.innerHTML = e.target.value !== "" ? "<div class='text-center' id='loading'>Loading...</div>" : "";
 
-      const source = e.target.value !== "" ? searchResult : contributors;
-      source.forEach((item) => {
-        const anchor = createContributorAnchor(item);
-        if (e.target.value === "" && item.id > initialContributorsNumber) return;
-        container.appendChild(anchor);
-      });
+      if (e.target.value !== "") {
+        searchResult.forEach((item) => {
+          const anchor = createContributorAnchor(item);
+          container.appendChild(anchor);
+        });
+      } else {
+        // Reset pagination when clearing search
+        currentPage = 1;
+        render(contributors, { paginate: true });
+      }
 
       const loading = document.getElementById("loading");
       if (loading) loading.setAttribute("hidden", true);
