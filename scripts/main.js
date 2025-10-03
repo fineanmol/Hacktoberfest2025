@@ -4,6 +4,66 @@ AOS.init();
 // Array containing contributors data
 const Contributors = contributors;
 
+// ---------- Utilities for safe rendering and URL parsing ----------
+function getGithubUsernameFromUrl(possibleUrl) {
+  try {
+    if (typeof possibleUrl !== "string" || possibleUrl.trim() === "") return null;
+    // Accept plain usernames as well as full URLs
+    if (!possibleUrl.includes("/")) return possibleUrl.trim();
+    const url = new URL(possibleUrl);
+    if (url.hostname !== "github.com") return null;
+    const path = url.pathname.replace(/^\/+/, "").split("/");
+    const username = path[0] || null;
+    return username && username.length > 0 ? username : null;
+  } catch (_) {
+    // Handle malformed URLs like 'https://github,com/...'
+    const fixed = possibleUrl.replace(",", ".");
+    try {
+      const url = new URL(fixed);
+      if (url.hostname !== "github.com") return null;
+      const path = url.pathname.replace(/^\/+/, "").split("/");
+      const username = path[0] || null;
+      return username && username.length > 0 ? username : null;
+    } catch (__){
+      return null;
+    }
+  }
+}
+
+function createAvatarImg(username) {
+  const img = document.createElement("img");
+  img.loading = "lazy";
+  if (username) {
+    img.src = `https://avatars.githubusercontent.com/${username}`;
+    img.alt = `${username}'s avatar`;
+  } else {
+    // Fallback placeholder avatar
+    img.src = "https://avatars.githubusercontent.com/ghost";
+    img.alt = "avatar";
+  }
+  return img;
+}
+
+function createContributorAnchor(item) {
+  const anchor = document.createElement("a");
+  anchor.className = "box-item";
+  const username = getGithubUsernameFromUrl(item.username);
+  const href = typeof item.username === "string" ? item.username : "";
+  if (href) {
+    anchor.setAttribute("href", href);
+    anchor.setAttribute("target", "_blank");
+    anchor.setAttribute("rel", "noopener noreferrer");
+  }
+
+  const nameSpan = document.createElement("span");
+  nameSpan.textContent = item.fullname || "Anonymous";
+  anchor.appendChild(nameSpan);
+
+  const img = createAvatarImg(username);
+  anchor.appendChild(img);
+  return anchor;
+}
+
 // Variables
 const searchbox = document.getElementById("search");
 let searchResult = null;
@@ -57,18 +117,16 @@ function filterUsers(str = "ContributorName", array) {
  * @param {Array} array - The array of contributors to render.
  */
 function render(array) {
+  const container = document.getElementById("contributors");
+  if (!container) {
+    console.warn("Contributors container not found");
+    return;
+  }
   array.forEach((item) => {
-    let username = document.createElement("span");
-    username.innerHTML = item.fullname;
-
-    let user = document.createElement("a");
-    user.className = "box-item";
-    user.setAttribute("href", item.username);
-    user.setAttribute("id", item.id);
-    user.append(username);
-
+    const anchor = createContributorAnchor(item);
+    anchor.setAttribute("id", item.id);
     if (item.id <= initialContributorsNumber) {
-      document.getElementById("contributors").append(user);
+      container.appendChild(anchor);
     }
   });
 }
@@ -80,81 +138,74 @@ render(contributors);
  * Loads more contributors when "Load More" button is clicked.
  */
 function loadMore() {
+  const container = document.getElementById("contributors");
+  if (!container) return;
   if (initialContributorsNumber >= contributors.length) {
     render(contributors);
   } else {
     initialContributorsNumber += 84;
-    document.getElementById("contributors").innerHTML =
-      "<div class='text-center' id='loading'>Loading...</div>";
+    container.innerHTML = "<div class='text-center' id='loading'>Loading...</div>";
     render(contributors);
-    document.querySelectorAll("a.box-item").forEach((con) => {
-      con.innerHTML += `<img loading="lazy" src="https://avatars.githubusercontent.com/${
-        con.href.split("https://github.com/")[1]
-      }">`;
-    });
-    document.getElementById("loading").setAttribute("hidden", true);
+    const loading = document.getElementById("loading");
+    if (loading) loading.setAttribute("hidden", true);
     if (initialContributorsNumber >= contributors.length) {
-      document.getElementById("loadMore").setAttribute("hidden", true);
+      const loadMoreEl = document.getElementById("loadMore");
+      if (loadMoreEl) loadMoreEl.setAttribute("hidden", true);
     }
   }
 }
 
 // Event listener for "Load More" button
 const loadMoreBtn = document.getElementById("loadMore");
-loadMoreBtn.addEventListener("click", loadMore);
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", loadMore);
+}
 
-// Add avatars to contributor links
+// Add avatars to existing contributor links (in case initial render occurred earlier)
 document.querySelectorAll("a.box-item").forEach((con) => {
-  con.innerHTML += `<img loading="lazy" src="https://avatars.githubusercontent.com/${
-    con.href.split("https://github.com/")[1]
-  }">`;
+  const username = getGithubUsernameFromUrl(con.getAttribute("href"));
+  const hasImg = con.querySelector("img");
+  if (!hasImg) {
+    con.appendChild(createAvatarImg(username));
+  }
 });
 
-// Event listener for the search box
-searchbox.addEventListener("keyup", async (e) => {
-  searchbox.value !== ""
-    ? document.getElementById("loadMore").classList.add("hidden")
-    : document.getElementById("loadMore").classList.remove("hidden");
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
 
-  searchResult = await filterUsers(e.target.value, contributors);
-  document.getElementById("contributors").innerHTML =
-    e.target.value !== ""
-      ? "<div class='text-center' id='loading'>Loading...</div>"
-      : "";
+// Event listener for the search box with debounce
+if (searchbox) {
+  searchbox.addEventListener(
+    "keyup",
+    debounce(async (e) => {
+      const loadMoreEl = document.getElementById("loadMore");
+      if (loadMoreEl) {
+        if (searchbox.value !== "") loadMoreEl.classList.add("hidden");
+        else loadMoreEl.classList.remove("hidden");
+      }
 
-  e.target.value !== ""
-    ? searchResult.forEach((item) => {
-        let username = document.createElement("span");
-        username.innerHTML = item.fullname;
+      searchResult = await filterUsers(e.target.value, contributors);
+      const container = document.getElementById("contributors");
+      if (!container) return;
+      container.innerHTML = e.target.value !== "" ? "<div class='text-center' id='loading'>Loading...</div>" : "";
 
-        let user = document.createElement("a");
-        user.className = "box-item";
-        user.setAttribute("href", item.username);
-        user.append(username);
-
-        document.getElementById("contributors").append(user);
-      })
-    : contributors.forEach((item) => {
-        let username = document.createElement("span");
-        username.innerHTML = item.fullname;
-
-        let user = document.createElement("a");
-        user.className = "box-item";
-        user.setAttribute("href", item.username);
-        user.append(username);
-        if (item.id <= initialContributorsNumber) {
-          document.getElementById("contributors").append(user);
-        }
+      const source = e.target.value !== "" ? searchResult : contributors;
+      source.forEach((item) => {
+        const anchor = createContributorAnchor(item);
+        if (e.target.value === "" && item.id > initialContributorsNumber) return;
+        container.appendChild(anchor);
       });
 
-  document.querySelectorAll("a.box-item").forEach((con) => {
-    con.innerHTML += `<img loading="lazy" src="https://github.com/${
-      con.href.split("https://github.com/")[1]
-    }.png">`;
-  });
-
-  document.getElementById("loading").setAttribute("hidden", true);
-});
+      const loading = document.getElementById("loading");
+      if (loading) loading.setAttribute("hidden", true);
+    }, 200)
+  );
+}
 
 /* Back-to-top button functionality */
 const backToTopButton = document.querySelector("#back-to-top-btn");
