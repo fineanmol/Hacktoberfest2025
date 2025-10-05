@@ -32,9 +32,15 @@ jobs:
         shell: bash
 
       - name: Unset GITHUB_TOKEN and authenticate GitHub CLI
+        env:
+          AUTOMERGE_TOKEN: ${{ secrets.AUTOMERGE_TOKEN }}
         run: |
           unset GITHUB_TOKEN
-          echo "${{ secrets.AUTOMERGE_TOKEN }}" | gh auth login --with-token
+          if [ -z "$AUTOMERGE_TOKEN" ]; then
+            echo "AUTOMERGE_TOKEN secret is not set. Please add it in your repository settings."
+            exit 1
+          fi
+          echo "$AUTOMERGE_TOKEN" | gh auth login --with-token
         shell: bash
 
       - name: Comment on issue/PR
