@@ -99,6 +99,36 @@
                 transform: scale(1.1);
             }
         }
+
+        /* Typing Animation Styles */
+        .typing-cursor {
+            opacity: 1;
+            animation: none;
+        }
+
+        .typing-cursor-blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% {
+                opacity: 1;
+            }
+            51%, 100% {
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced heading animation */
+        .heading {
+            transition: all 0.6s ease;
+        }
+
+        .heading b {
+            display: inline-block;
+            font-family: 'Special Elite', cursive;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 
@@ -247,6 +277,7 @@
     <!-- GitHub API integration - fetches live contributors (with fallback to manual list) -->
     <script src="./scripts/github-contributors.js"></script>
     <script src="./scripts/scroll.js"></script>
+    <script src="./scripts/typing-animation.js"></script>
 </body>
 
 </html>

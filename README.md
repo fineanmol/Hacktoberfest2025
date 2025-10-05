@@ -1,4 +1,4 @@
-## Hacktoberfest-2025
+## 🎃 Hacktoberfest-2025
 
 **Check out this project as well: [Annoying Button😡](https://annoyingsubmitbutton.netlify.app/). It's Hacktoberfest GitHub repo: [https://github.com/fineanmol/Annoying-submit-button](https://github.com/fineanmol/Annoying-submit-button)**
 
