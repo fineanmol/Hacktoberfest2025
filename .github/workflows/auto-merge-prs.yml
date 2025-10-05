@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
   schedule:
     # Run every hour to check for mergeable PRs
-    - cron: '0 * * * *'
+    - cron: "0 * * * *"
   workflow_dispatch:
     # Allow manual triggering
 
@@ -17,7 +17,7 @@ permissions:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    if: github.repository == 'fineanmol/Hacktoberfest2024'
+    if: github.repository == 'fineanmol/Hacktoberfest2025'
     steps:
       - name: 🔄 Checkout repository
         uses: actions/checkout@v4
@@ -104,7 +104,7 @@ jobs:
         run: |
           contributor_count=$(grep -c "id:" contributors/contributorsList.js)
           echo "📊 Total Contributors: $contributor_count"
-          
+
           if [ -f "README.md" ]; then
             echo "README.md found – could update contributor count"
           fi

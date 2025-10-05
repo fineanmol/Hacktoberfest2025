@@ -4,7 +4,7 @@
 
 # Submit your PR on this new repo [Hacktoberfest](https://github.com/fineanmol/hacktoberfest). We are merging all PRs there.
 
-In this current repo, there are a lot of conflicts; we are not merging until all conflicts are resolved. Hacktoberfest { [Live Website](https://fineanmol.github.io/Hacktoberfest2024/) }
+In this current repo, there are a lot of conflicts; we are not merging until all conflicts are resolved. Hacktoberfest { [Live Website](https://fineanmol.github.io/Hacktoberfest2025/) }
 
 **This is a beginner-friendly project to help you get started with your [Hacktoberfest](https://hacktoberfest.digitalocean.com/). If you don't know where to start, feel free to watch the videos linked below and read the contribution rules. Happy Learning <3 💙 !!**
 
@@ -34,13 +34,13 @@ Hacktoberfest 2024
 - Clone it on your local machine
 
 ```terminal
-git clone https://github.com/fineanmol/Hacktoberfest2024.git
+git clone https://github.com/fineanmol/Hacktoberfest2025.git
 ```
 
 - Navigate to the project directory.
 
 ```terminal
-cd Hacktoberfest2024
+cd Hacktoberfest2025
 ```
 
 - Create a new branch
@@ -73,10 +73,10 @@ git push origin my-new-branch
 
 ## Avoid Conflicts {Syncing your fork}
 
-An easy way to avoid conflicts is to add an 'upstream' for your git repo, as other PRs may be merged while you're working on your branch/fork.   
+An easy way to avoid conflicts is to add an 'upstream' for your git repo, as other PRs may be merged while you're working on your branch/fork.
 
 ```terminal
-git remote add upstream https://github.com/fineanmol/Hacktoberfest2024
+git remote add upstream https://github.com/fineanmol/Hacktoberfest2025
 ```
 
 You can verify that the new remote has been added by typing:
@@ -123,11 +123,12 @@ Many candidates get attracted to Hacktoberfest for the swags. After 4 successful
 - What is the event for?
   - For open source community engagement and to learn how to contribute to open source.
 
-###### *We will do our best to merge as much as possible from everyone. However, time is limited, and the merge conflicts are horrible :astonished: <3*
+###### _We will do our best to merge as much as possible from everyone. However, time is limited, and the merge conflicts are horrible :astonished: <3_
+
 <br>
 
-## Our Top Contributors 
+## Our Top Contributors
 
-<p align="center"><a href="https://github.com/fineanmol/Hacktoberfest2024/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fineanmol/Hacktoberfest2024" max={1000} columns={100} anon={1}/>
+<p align="center"><a href="https://github.com/fineanmol/Hacktoberfest2025/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fineanmol/Hacktoberfest2025" max={1000} columns={100} anon={1}/>
 </a></p>
