@@ -21,7 +21,7 @@ jobs:
         if: github.event_name == 'issues'
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const username = context.payload.issue.user.login;
             await github.rest.issues.createComment({
@@ -35,7 +35,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const username = context.payload.pull_request.user.login;
             await github.rest.issues.createComment({
