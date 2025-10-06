@@ -2716,4 +2716,9 @@ contributors = [
     fullname: "Rajesh Roy",
     username: "https://github.com/jaycss9"
   },
+  {
+    id: 424,
+    fullname: "Stéphane Willems",
+    username: "https://github.com/stephanewillems",
+  }
 ];
