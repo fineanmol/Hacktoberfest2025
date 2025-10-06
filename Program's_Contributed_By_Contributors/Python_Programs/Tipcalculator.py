@@ -1,17 +1,47 @@
 from decimal import Decimal, ROUND_HALF_UP
 from typing import List, Dict
 from datetime import datetime
+import json
+import logging
 
 class TipCalculator:
     def __init__(self):
-        self.currency_symbols = {
-            'INR': '₹',
-            'USD': '$',
-            'EUR': '€',
-            'GBP': '£'
-        }
-        self.current_currency = 'INR'
+        self._load_config()
         self.history: List[Dict] = []
+        self._setup_logging()
+
+    def _load_config(self) -> None:
+        """Load configuration from config.json file."""
+        try:
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+                self.currency_symbols = config['currencies']
+                self.current_currency = config['default_currency']
+                self.default_tip_percentages = config['default_tip_percentages']
+                self.decimal_precision = config['decimal_precision']
+                self.date_format = config['date_format']
+        except FileNotFoundError:
+            logging.error("Config file not found. Using default settings.")
+            self.currency_symbols = {'INR': '₹', 'USD': '$', 'EUR': '€', 'GBP': '£'}
+            self.current_currency = 'INR'
+            self.default_tip_percentages = [5, 10, 15, 20]
+            self.decimal_precision = 2
+            self.date_format = '%Y-%m-%d %H:%M:%S'
+
+    def _setup_logging(self) -> None:
+        """Setup logging configuration."""
+        try:
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+                logging_config = config['logging']
+                logging.basicConfig(
+                    level=logging_config['level'],
+                    format=logging_config['format'],
+                    filename=logging_config['file']
+                )
+        except Exception as e:
+            logging.basicConfig(level=logging.INFO)
+            logging.error(f"Error setting up logging: {str(e)}")
 
     def format_amount(self, amount: Decimal) -> str:
         """Format the amount with currency symbol and proper decimal places."""
