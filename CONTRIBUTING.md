@@ -1,3 +1,4 @@
+Improved instructions for contributers
 # Contribution Guidelines 📚
 
 Welcome to Our Project!
