@@ -1,4 +1,5 @@
 contributors = [
+ 
   {
     id: 1,
     fullname: "Anmol Agarwal",
@@ -2686,5 +2687,10 @@ contributors = [
     fullname: "M4ximumPizza",
     username: "https://github.com/M4ximumPizza",
   },
+  {
+     id: 472,
+    fullname: "Abhijit Sahoo",
+    username: "https://github.com/abhijit9040",
+  }
 
 ];
