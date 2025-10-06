@@ -87,6 +87,8 @@ git checkout -b my-new-branch
 
 <!--- - Add your name to `contributors/contributorsList.js`. -->
 
+- Make changes, then Add
+
 ```markdown
 git add .
 ```
