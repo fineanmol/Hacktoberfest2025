@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Simple Bash Calculator
+
+echo "==============================="
+echo "      Simple Calculator        "
+echo "==============================="
+
+# Read first number
+read -p "Enter first number: " num1
+
+# Read operator
+read -p "Enter operator (+, -, *, /): " op
+
+# Read second number
+read -p "Enter second number: " num2
+
+# Perform calculation
+case $op in
+    +)
+        result=$(echo "$num1 + $num2" | bc)
+        ;;
+    -)
+        result=$(echo "$num1 - $num2" | bc)
+        ;;
+    \*)
+        result=$(echo "$num1 * $num2" | bc)
+        ;;
+    /)
+        if [ $num2 -eq 0 ]; then
+            echo "Error: Division by zero!"
+            exit 1
+        fi
+        result=$(echo "scale=2; $num1 / $num2" | bc)
+        ;;
+    *)
+        echo "Invalid operator!"
+        exit 1
+        ;;
+esac
+
+echo "Result: $num1 $op $num2 = $result"

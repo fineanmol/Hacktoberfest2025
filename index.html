@@ -1,295 +1,249 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Join 450+ contributors in Hacktoberfest 2025! Contribute code and appear automatically on our contributors page. Beginner-friendly open source project.">
-    <meta name="keywords" content="hacktoberfest, open source, github, contributions, 2025, beginners, pull requests">
-    <meta name="author" content="Anmol Agarwal">
-    <link rel="canonical" href="https://fineanmol.github.io/Hacktoberfest2025/">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fineanmol.github.io/Hacktoberfest2025/">
-    <meta property="og:title" content="Hacktoberfest 2025 - Contributors">
-    <meta property="og:description" content="Join 450+ contributors in Hacktoberfest 2025! Your contributions count automatically.">
-    <meta property="og:image" content="https://fineanmol.github.io/Hacktoberfest2025/scripts/Event_Completed_.png">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://fineanmol.github.io/Hacktoberfest2025/">
-    <meta name="twitter:title" content="Hacktoberfest 2025 - Contributors">
-    <meta name="twitter:description" content="Join 450+ contributors! Make meaningful contributions and appear automatically.">
-    <meta name="twitter:image" content="https://fineanmol.github.io/Hacktoberfest2025/scripts/Event_Completed_.png">
-    
-    <link rel="icon" href="https://hacktoberfestswaglist.com/img/hacktoberfest-favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon-96x96.png" type="image/x-icon">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deepak Gurram — Interactive Profile Showcase</title>
+  <style>
+    :root {
+      --bg1: #0a0f1f;
+      --bg2: #1a1033;
+      --accent1: #00f5d4;
+      --accent2: #7c3aed;
+      --text: #e6eef8;
+      --card-bg: rgba(255,255,255,0.05);
+      --blur: blur(10px);
+      font-family: 'Poppins', sans-serif;
+    }
 
-    <!-- CSS Dependencies -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/contributors.css">
-    <link rel="stylesheet" href="./css/navbar.css">
-    <link rel="stylesheet" href="./css/footer.css">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, var(--accent2)10%, transparent 60%),
+                  radial-gradient(circle at bottom right, var(--accent1)10%, transparent 60%),
+                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      padding: 20px;
+    }
 
-    <title>Hacktoberfest - Contributors</title>
-    <style>
-        .hidden {
-            display: none;
-        }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+      animation: fadeIn 1.2s ease-in-out;
+    }
 
-        .st0 {
-            fill: #FF0844;
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        /* Back to Top Button Styles */
-        #back-to-top-btn {
-            display: none;
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 99;
-            border: none;
-            outline: none;
-            background-color: #FF0844;
-            color: white;
-            cursor: pointer;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 18px;
-            width: 50px;
-            height: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-             animation: floaty 3s ease-in-out infinite;
-        }
+    .profile-card {
+      flex: 1 1 500px;
+      background: var(--card-bg);
+      backdrop-filter: var(--blur);
+      border-radius: 20px;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
 
-        #back-to-top-btn:hover {
-            background-color: #d90739;
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
+    .profile-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
 
-        #back-to-top-btn.mousedown {
-            transform: scale(0.95);
-        }
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      display: grid;
+      place-items: center;
+      font-size: 42px;
+      font-weight: 700;
+      color: #0f172a;
+      box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+      animation: pulseGlow 3s infinite;
+    }
 
-        #back-to-top-btn.startscrolling {
-            animation: pulse 0.5s ease-in-out;
-        }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px var(--accent1); }
+      50% { box-shadow: 0 0 40px var(--accent2); }
+    }
 
-        @keyframes pulse {
+    .info { margin-top: 20px; }
+    .info h1 { font-size: 26px; margin: 0; color: var(--accent1); }
+    .info p { color: rgba(255,255,255,0.7); margin-top: 6px; font-size: 14px; }
 
-            0%,
-            100% {
-                transform: scale(1);
-            }
+    .skills { margin-top: 20px; }
+    .skill { margin: 10px 0; font-size: 14px; }
+    .bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+    .bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent1), var(--accent2)); width: 0; border-radius: 10px; transition: width 1s ease; }
 
-            50% {
-                transform: scale(1.1);
-            }
-        }
+    .projects { margin-top: 25px; }
+    .projects h2 { margin-bottom: 10px; color: var(--accent1); font-size: 18px; }
+    .project { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 10px 15px; margin-bottom: 10px; transition: background 0.3s; }
+    .project:hover { background: rgba(255,255,255,0.1); }
 
-         @keyframes floaty {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
-        }
+    .extra-info { display: none; margin-top: 20px; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; animation: fadeIn 0.6s ease-in-out; }
 
-        /* Typing Animation Styles */
-        .typing-cursor {
-            opacity: 1;
-            animation: none;
-        }
+    .contact-card { flex: 1 1 300px; background: var(--card-bg); backdrop-filter: var(--blur); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); animation: slideIn 1.5s ease-in-out; }
 
-        .typing-cursor-blink {
-            animation: blink 1s infinite;
-        }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
 
-        @keyframes blink {
-            0%, 50% {
-                opacity: 1;
-            }
-            51%, 100% {
-                opacity: 0;
-            }
-        }
+    .contact-card a { text-decoration: none; color: var(--accent1); font-weight: 600; transition: color 0.3s; }
+    .contact-card a:hover { color: var(--accent2); }
 
-        /* Enhanced heading animation */
-        .heading {
-            transition: all 0.6s ease;
-        }
-
-        .heading b {
-            display: inline-block;
-            font-family: 'Special Elite', cursive;
-            letter-spacing: 2px;
-        }
-    </style>
+    .btn { background: linear-gradient(90deg, var(--accent1), var(--accent2)); border: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease; color: #0a0f1f; margin-top: 10px; }
+    .btn:hover { transform: scale(1.05); }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <div class="profile-card">
+      <div class="avatar">DG</div>
+      <div class="info">
+        <h1>Deepak Gurram</h1>
+        <p>Cybersecurity Engineer | CEH v13 AI | Ethical Hacker</p>
+      </div>
 
-    <!-- Back-to-top Button -->
-    <button id="back-to-top-btn" title="Go to top" aria-label="Back to top">
-        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
-    </button>
+      <div class="skills" id="skillsList">
+        <div class="skill">Python<div class="bar"><span data-skill="90"></span></div></div>
+        <div class="skill">Pentesting (Tools & Techniques)<div class="bar"><span data-skill="88"></span></div></div>
+        <div class="skill">Web App Testing (OWASP)<div class="bar"><span data-skill="82"></span></div></div>
+        <div class="skill">Network Scanning & Enumeration<div class="bar"><span data-skill="84"></span></div></div>
+        <div class="skill">Privilege Escalation / Post-Exploitation<div class="bar"><span data-skill="75"></span></div></div>
+        <div class="skill">Cloud Security (Basics)<div class="bar"><span data-skill="60"></span></div></div>
+        <div class="skill">Scripting (Bash / Python)<div class="bar"><span data-skill="78"></span></div></div>
+      </div>
 
-    <!--
-        __  __              __    __          __                 ____             __
-      / / / /____ _ _____ / /__ / /_ ____   / /_   ___   _____ / __/___   _____ / /_
-      / /_/ // __ `// ___// //_// __// __ \ / __ \ / _ \ / ___// /_ / _ \ / ___// __/
-    / __  // /_/ // /__ / ,<  / /_ / /_/ // /_/ //  __// /   / __//  __/(__  )/ /_
-    /_/ /_/ \__,_/ \___//_/|_| \__/ \____//_.___/ \___//_/   /_/   \___//____/ \__/
-                                                i just want a t-shirt at this point
-    -->
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm">
-        <a class="navbar-brand" href="/">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300"
-                style="enable-background:new 0 0 300 300;" xml:space="preserve" role="img"
-                aria-labelledby="dyn2wm4vin1xgraye3ggy9kf12oaz8a" class="header__logo" width="50px" height="50px">
-                <title id="dyn2wm4vin1xgraye3ggy9kf12oaz8a">Hacktoberfest <span id="current-year-title"></span></title>
-                <path class="st0"
-                    d="M0.7,0.7v298.7h298.7V0.7H0.7z M197.8,271.4l-32-32v-95.6l-31.4,31.4v79l-17.3,17.3L99.8,254V70.4L95,65.6  L73,87.7L61.7,76.5l47.8-47.8l0.1,0.1l0,0l1.9,1.8l22.8,22.8V136l31.4-31.4V70.2L150,54.4l25.8-25.8l24.7,24.7v169.1l12.1,12.1  l14.7-14.7l11.1,11.1L197.8,271.4z">
-                </path>
-            </svg>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto" id="menu">
-                <!-- Navbar items will be dynamically added -->
-            </ul>
+      <div class="projects">
+        <h2>Highlighted Projects</h2>
+        <div class="project">⚡ <strong>DVWA Pentest:</strong> Real-world VAPT simulation using Metasploit, Nmap, Burp Suite.</div>
+        <div class="project">🕵️ <strong>OSINT Toolkit:</strong> Automated Google Dork Search Engine built using JS.</div>
+      </div>
+
+      <div class="extra-info" id="extraInfo">
+        <h3>Certifications</h3>
+        <ul>
+          <li>✅ CEH v13 AI</li>
+          <li>✅ Google Cybersecurity Certificate</li>
+        </ul>
+
+        <h3>Pentesting Tools (Comprehensive)</h3>
+        <div id="tools" style="max-height:220px;overflow:auto;padding:10px;background:rgba(0,0,0,0.12);border-radius:8px;">
+          <ul>
+            <li>Nmap</li>
+            <li>Masscan</li>
+            <li>Metasploit Framework</li>
+            <li>Armitage</li>
+            <li>Burp Suite (Professional & Community)</li>
+            <li>OWASP ZAP</li>
+            <li>sqlmap</li>
+            <li>Dirb / Dirbuster / Gobuster</li>
+            <li>Nikto</li>
+            <li>Wfuzz</li>
+            <li>Hydra / Medusa / Patator</li>
+            <li>John the Ripper</li>
+            <li>Hashcat</li>
+            <li>Wireshark</li>
+            <li>tcpdump</li>
+            <li>Aircrack-ng suite</li>
+            <li>Reaver</li>
+            <li>Responder</li>
+            <li>Impacket</li>
+            <li>BloodHound</li>
+            <li>CrackMapExec</li>
+            <li>Empire</li>
+            <li>Cobalt Strike (awareness — commercial)</li>
+            <li>Nessus</li>
+            <li>OpenVAS</li>
+            <li>WPScan</li>
+            <li>BeEF</li>
+            <li>Social-Engineer Toolkit (SET)</li>
+            <li>Volatility (forensics)</li>
+            <li>Radare2 / Ghidra (reverse engineering)</li>
+            <li>Frida (dynamic analysis)</li>
+            <li>Hash-Identifier</li>
+            <li>Metagoofil (OSINT)</li>
+            <li>Maltego (OSINT)</li>
+            <li>Splunk (log analysis)</li>
+            <li>Ffuf (fuzzing)</li>
+          </ul>
         </div>
-    </nav>
 
-    <!-- Main Content -->
-    <div class="content">
-        <div class="container">
-            <span class="heading"><b>CONTRIBUTORS</b> </span>
-            <div class="heart"></div>
-            <div class="tdnn">
-                <div class="moon"></div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-                <p class="rubberBand delay-4s">🎉 Make ANY contribution - you'll appear automatically!</p>
-                <div class="inputs mr-3">
-                    <i class="fa fa-search"></i>
-                    <input type="text" id="search" class="form-control" placeholder="Search Contributors.."
-                        aria-label="Search contributors" aria-controls="contributors">
-                </div>
-            </div>
-            <div>
-                <a class="github-button" href="https://github.com/fineanmol/Hacktoberfest2025" data-icon="octicon-star"
-                    data-size="large" data-show-count="true" aria-label="Star fineanmol/Hacktoberfest2025 on GitHub">To
-                    Get "HacktoberFest-Accepted" label, Star ✩ the repo </a>
-            </div>
-            <hr style="width:90%">
+        <h3 style="margin-top:12px">Core Pentesting Skills</h3>
+        <ul>
+          <li>Reconnaissance & OSINT</li>
+          <li>Port & Vulnerability Scanning</li>
+          <li>Web Application Testing (XSS, SQLi, CSRF, RCE)</li>
+          <li>Network Penetration Testing (SMB, RDP, SNMP, LDAP)</li>
+          <li>Privilege Escalation (Windows & Linux)</li>
+          <li>Active Directory Attacks & Lateral Movement</li>
+          <li>Wireless Network Attacks (WEP/WPA/WPA2)</li>
+          <li>Exploit Development Basics</li>
+          <li>Reverse Engineering & Malware Analysis</li>
+          <li>Post-Exploitation & Persistence</li>
+          <li>Reporting & Remediation Guidance</li>
+          <li>Cloud Security (IAM, misconfigurations)</li>
+          <li>Scripting & Automation (Python, Bash)</li>
+        </ul>
 
-            <!-- Loading Indicator -->
-            <div id="loading-contributors" style="display:none; text-align:center; padding:40px;">
-                <div style="display:inline-block;">
-                    <div
-                        style="border: 4px solid #f3f3f3; border-top: 4px solid #FF0844; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto;">
-                    </div>
-                    <p style="margin-top: 15px; color: #FF0844; font-weight: bold;">
-                        Loading contributors from GitHub API...
-                    </p>
-                    <p style="font-size: 0.9em; color: #666;">
-                        Fetching live data •
-                    </p>
-                </div>
-            </div>
-            <style>
-                @keyframes spin {
-                    0% {
-                        transform: rotate(0deg);
-                    }
+        <h3 style="margin-top:12px">Learning</h3>
+        <p>Currently exploring AI/ML in Pentesting and Cloud Security.</p>
+      </div>
 
-                    100% {
-                        transform: rotate(360deg);
-                    }
-                }
-            </style>
-        </div>
-        <div class="container-fluid">
-            <!-- Contributors will be displayed here -->
-            <div class="box mx-auto my-5 justify-content-center" id="contributors" role="list" data-aos="zoom-in-down">
-            </div>
-        </div>
+      <button class="btn" id="moreBtn">View More</button>
     </div>
 
-    <div class="box mx-auto my-5 justify-content-center" id="box">
-        <a data-aos="zoom-in-down" class="btn btn-outline-secondary btn-lg load-more" id="loadMore" role="button"
-            aria-label="Load more contributors"><u>Load More</u></a>
+    <div class="contact-card">
+      <h2>Connect with Me</h2>
+      <div>🌐 Hyderabad, India</div>
+      <div>💼 Looking for: Penetration Tester / Cybersecurity Intern</div>
+      <div>
+        🔗 <a href="https://linkedin.com/in/deepakgurram" target="_blank">LinkedIn</a>
+      </div>
+      <button class="btn" id="downloadResume">Open Resume</button>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <div class="footer mt-auto py-3 bg-light text-center">
-        <div class="container">
-            <span class="text-muted">
-                <div id="stats" aria-live="polite"></div>
-            </span>
-        </div>
-    </div>
+  <script>
+    const bars = document.querySelectorAll('.bar span');
+    window.addEventListener('load', () => {
+      bars.forEach((bar, i) => {
+        setTimeout(() => { bar.style.width = bar.getAttribute('data-skill') + '%'; }, i * 150);
+      });
+    });
 
-    <footer>
-        <div class="footer-content">
-            <h3>Hacktoberfest <span id="current-year-footer"></span></h3>
-            <p>This Project is participating in <b>Hacktoberfest</b>. Copyright &copy; <span
-                    id="current-year-copyright"></span>.</p>
-            <div class="footer-menu">
-                <ul class="socials">
-                    <li><a href="https://www.facebook.com/fineanmol" target="_blank"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li><a href="https://twitter.com/fineanmol" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="https://www.instagram.com/fineanmol" target="_blank"><i
-                                class="fa fa-instagram"></i></a></li>
-                    <li><a href="https://www.linkedin.com/in/fineanmol/" target="_blank"><i
-                                class="fa fa-linkedin-square"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+    document.getElementById('downloadResume').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open('https://drive.google.com/file/d/1QP0n6F3PcIQyt9Kc2NTEsRMdVb1rZCPT/view', '_blank');
+    });
 
-    <!-- JavaScript Dependencies -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6QA4fZSN7NTMZBeZfFgOwOLfLZc4eME6vH3kn4tEWvJgC4ndOlxogypGLyBI"
-        crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/d9f7ec7b29.js" crossorigin="anonymous"></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    const moreBtn = document.getElementById('moreBtn');
+    const extraInfo = document.getElementById('extraInfo');
 
-    <!-- Custom Scripts -->
-    <script src="./scripts/menu.js"></script>
-    <!-- Load manual contributors list as fallback -->
-    <script src="./contributors/contributorsList.js"></script>
-    <!-- Main script - handles display logic -->
-    <script src="./scripts/main.js"></script>
-    <!-- GitHub API integration - fetches live contributors (with fallback to manual list) -->
-    <script src="./scripts/github-contributors.js"></script>
-    <script src="./scripts/scroll.js"></script>
-    <script src="./scripts/typing-animation.js"></script>
+    moreBtn.addEventListener('click', () => {
+      if (extraInfo.style.display === 'block') {
+        extraInfo.style.display = 'none';
+        moreBtn.textContent = 'View More';
+      } else {
+        extraInfo.style.display = 'block';
+        moreBtn.textContent = 'View Less';
+        extraInfo.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
 </body>
-
 </html>
