@@ -1,0 +1,20 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+bool isPalindrome(string s) {
+    string clean = "";
+    for (char c : s)
+        if (isalnum(c)) clean += tolower(c);
+    string rev = clean;
+    reverse(rev.begin(), rev.end());
+    return clean == rev;
+}
+
+int main() {
+    string s;
+    cout << "Enter string: ";
+    getline(cin, s);
+    cout << (isPalindrome(s) ? "Palindrome" : "Not Palindrome");
+}
