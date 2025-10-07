@@ -3,11 +3,20 @@
 
 **Check out this project as well: [Annoying Button😡](https://annoyingsubmitbutton.netlify.app/). It's Hacktoberfest GitHub repo: [https://github.com/fineanmol/Annoying-submit-button](https://github.com/fineanmol/Annoying-submit-button)**
 
-# 🎉 NEW: Automatic Contributor Recognition!
+# 🎉 Automatic Contributor Recognition!
 
 When you make **ANY contribution** to this project, you'll automatically appear on our [**Contributors Page**](https://fineanmol.github.io/Hacktoberfest2025/) with your GitHub avatar and stats!
 
-**No need to manually add your name** - GitHub API tracks everything automatically! ✨
+**✨ No need to manually add your name** - our GitHub API integration tracks everything automatically!
+
+**What counts as a contribution?**
+- 🐛 Bug fixes
+- ✨ New features  
+- 📝 Documentation improvements
+- 🎨 UI/UX enhancements
+- ♻️ Code refactoring
+- ✅ Tests
+- 🔧 Configuration improvements
 
 **This is a beginner-friendly project to help you get started with [Hacktoberfest](https://hacktoberfest.digitalocean.com/). If you don't know where to start, feel free to watch the videos linked below and read the contribution rules. Happy Learning <3 💙 !!**
 
@@ -15,8 +24,9 @@ When you make **ANY contribution** to this project, you'll automatically appear 
 
 P.S. Star ⭐ and share this repository if you had fun!! 😍
 
-Hacktoberfest 2025
-![Event Completed](/scripts/Event_Completed_.png)
+## 📅 Hacktoberfest 2025 is LIVE! (October 1-31, 2025)
+
+Join us in celebrating open source! 🎉
 
 <details>
   <summary>Table of Contents</summary>
@@ -39,20 +49,7 @@ Hacktoberfest 2025
 - [How to pull request [Overview]](https://youtu.be/DIj2q02gvKs)
 - [Merge Conflict / comment](https://youtu.be/zOx5PJTY8CI)
 
-# 🎯 How Your Contribution Counts
-
-**When you make any of these contributions, you'll automatically appear on our contributors page:**
-
-- 🐛 **Bug fixes** - Fix issues, improve error handling
-- ✨ **New features** - Add new functionality
-- 📝 **Documentation** - Improve README, add guides
-- 🎨 **UI/UX improvements** - Enhance design, accessibility
-- ♻️ **Code refactoring** - Improve code quality
-- ✅ **Tests** - Add unit or integration tests
-- 🔧 **Configuration** - Improve workflows, add tools
-- 🌐 **Translations** - Add i18n support
-
-# Contribution Rules📚:
+# Contribution Rules 📚:
 
 - ✅ Make meaningful contributions (code, docs, design)
 - ✅ Keep pull requests focused and small
