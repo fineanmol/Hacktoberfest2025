@@ -1,7 +1,0 @@
-{
-    "folder_path": "C:/Users/Anonymous/Downloads/devops projects/flask-mysql-k8s-app",
-    "git_remote": "https://github.com/Kunal-CodeLab/flask-mysql-app",
-    "commit_interval": 300,
-    "log_level": "INFO",
-    "max_log_size": 10485760
-}

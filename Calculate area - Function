@@ -1,7 +1,0 @@
-def calculate_area(length, width):
-    return length * width
-
-length = int(input())
-width = int(input())
-
-print(calculate_area(length, width))

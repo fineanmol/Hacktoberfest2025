@@ -2458,19 +2458,20 @@ contributors = [
     fullname: "Yajnesh Kumar",
     username: "https://github.com/yajneshkumar790",
   },
-    {
+  {
     id: 428,
     fullname: "Uğur Özcan",
     username: "https://github.com/uozcan12",
+  },
   {
     id: 428,
     fullname: "Mohd Sameer",
     username: "https://github.com/Sameer-ts-tech",
-   },
+  },
   {
     fullname: "Sonal Gupta",
     username: "https://github.com/Sonalgupta2005",
-    },
+  },
 
   {
     id: 411,
@@ -2500,7 +2501,7 @@ contributors = [
     fullname: "Bailey Henderson",
     username: "https://github.com/baileykh",
   },
-  
+
 
   {
     id: 415,
@@ -2718,11 +2719,11 @@ contributors = [
   {
     id: 473,
     fullname: "Rajesh Roy",
-    username: "https://github.com/jaycss9"
+    username: "https://github.com/jaycss9",
   },
   {
-    id: 479,
-    fullname: "Riya Ghosh",
-    username: "https://github.com/404RiyaFound",
+    id: 475,
+    fullname: "Shreya Pal",
+    username: "https://github.com/PLayerNightQueen16",
   },
 ];
