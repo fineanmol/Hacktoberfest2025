@@ -2462,6 +2462,7 @@ contributors = [
     id: 428,
     fullname: "Uğur Özcan",
     username: "https://github.com/uozcan12",
+    }
   {
     id: 428,
     fullname: "Mohd Sameer",
@@ -2720,4 +2721,9 @@ contributors = [
     fullname: "Rajesh Roy",
     username: "https://github.com/jaycss9"
   },
+  {
+    id: 476,
+    fullname: "Ananya Kumar",
+    username: "https://github.com/AnanyaKumar27"
+  }
 ];
