@@ -2,11 +2,9 @@ name: Auto Comment
 
 on:
   issues:
-    types:
-      - opened
-  pull_request:
-    types:
-      - opened
+    types: [opened]
+  pull_request_target:
+    types: [opened]
 
 permissions:
   contents: read
