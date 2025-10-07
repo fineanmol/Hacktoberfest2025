@@ -7,8 +7,8 @@ contributors = [
 
   {
     id: 2,
-    fullname: "Sachin", 
-    username: "https://github.com/mugenkyou", 
+    fullname: "Amitava Mitra",
+    username: "https://github.com/Amitava123",
   },
 
   {
@@ -2458,6 +2458,20 @@ contributors = [
     fullname: "Yajnesh Kumar",
     username: "https://github.com/yajneshkumar790",
   },
+  {
+    id: 428,
+    fullname: "Uğur Özcan",
+    username: "https://github.com/uozcan12",
+  },
+  {
+    id: 428,
+    fullname: "Mohd Sameer",
+    username: "https://github.com/Sameer-ts-tech",
+  },
+  {
+    fullname: "Sonal Gupta",
+    username: "https://github.com/Sonalgupta2005",
+  },
 
   {
     id: 411,
@@ -2487,7 +2501,7 @@ contributors = [
     fullname: "Bailey Henderson",
     username: "https://github.com/baileykh",
   },
-  
+
 
   {
     id: 415,
@@ -2680,6 +2694,11 @@ contributors = [
     fullname: "Vikas jakkula",
     username: "https://github.com/vikasjakkula",
   },
+  {
+    id: 447,
+    fullname: "Aziz Khanji",
+    username: "https://github.com/axizkhan",
+  },
 
   {
     id: 447,
@@ -2703,13 +2722,8 @@ contributors = [
     username: "https://github.com/jaycss9",
   },
   {
-    id: 474 ,
-    fullname: "Amitava Mitra",
-    username: "https://github.com/Amitava123",
-  },
-  {
     id: 475,
-    fullname: "Pratishta Holkar",
-    username: "https://github.com/Pratishta08",
+    fullname: "Shreya Pal",
+    username: "https://github.com/PLayerNightQueen16",
   },
 ];

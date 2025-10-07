@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarHub - Your Automotive Destination</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="grid-background"></div>
+
+    <header class="main-header">
+        <div class="logo">
+            <img src="logo.png" alt="CarHub Logo">
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#buy">Buy Cars</a></li>
+                <li><a href="#sell">Sell Cars</a></li>
+                <li><a href="#service">Service</a></li>
+                <li><a href="#vintage">Vintage</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="Login">Login</a></li>
+                <li><a href="Signup">Sign</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="background-media">
+                <video autoplay muted playsinline src="intropagevd.mp4" id="heroVideo"></video>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>WHERE EVERY JOURNEY BEGINS</h1>
+                <p class="tagline">DISCOVER, ACQUIRE, EXCEL.</p>
+                <div class="cta-buttons">
+                    <a href="#buy" class="btn btn-primary">EXPLORE INVENTORY</a>
+                    <a href="#sell" class="btn btn-secondary">SELL YOUR CAR</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="usp-showcase" id="buy">
+            <div class="usp-text-block centered-text">
+                <h2>YOUR NEXT DRIVING EXPERIENCE.</h2>
+                <p class="padded-bottom">Curated selection of new and pre-owned vehicles. Unbeatable prices, unmatched quality.</p>
+                <a href="#" class="btn btn-secondary">VIEW ALL CARS</a>
+            </div>
+            <!-- <div class="usp-image-block" style="background-image: url('https://via.placeholder.com/1600x900/444444/FFFFFF?text=Luxury+Car+Interior');"></div> -->
+        </section>
+
+        <section class="usp-showcase-merged" id="sell">
+            <div class="merged-content-block full-video-card">
+                <video autoplay loop muted playsinline src="Sellingintropage.mp4" class="card-bg-video"></video>
+                <div class="card-bg-overlay"></div>
+                <div class="merged-text-content-overlay">
+                    <h2>SEAMLESS SELLING. MAXIMIZED VALUE.</h2>
+                    <p>Effortlessly sell your vehicle. Best market prices guaranteed, smooth transactions.</p>
+                    <a href="#" class="btn btn-dark">GET AN OFFER</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="usp-showcase-merged" id="service">
+            <div class="merged-content-block full-video-card">
+                <video autoplay loop muted playsinline src="Moderncarsintropage.mp4" class="card-bg-video"></video>
+                <div class="card-bg-overlay"></div>
+                <div class="merged-text-content-overlay">
+                    <h2>PRECISION SERVICE. PEAK PERFORMANCE.</h2>
+                    <p>Expert service scheduling for optimal vehicle health. Convenience, reliability, excellence.</p>
+                    <a href="#" class="btn btn-dark">BOOK SERVICE</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="usp-showcase-merged" id="vintage">
+            <div class="merged-content-block full-video-card">
+                <video autoplay loop muted playsinline src="Classicintropage.mp4" class="card-bg-video"></video>
+                <div class="card-bg-overlay"></div>
+                <div class="merged-text-content-overlay">
+                    <h2>TIMELESS BEAUTY. RARE FINDS.</h2>
+                    <p>Step back in time with our exquisite collection of vintage automobiles. Each classic car is a piece of history, meticulously inspected and ready for a new legacy.</p>
+                    <a href="#" class="btn btn-dark">EXPLORE VINTAGE COLLECTION</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="service-usp-section">
+            <div class="service-usp-content">
+                <h3>THE BEST CARE FOR YOUR VEHICLE</h3>
+                <p class="large">Our certified technicians provide top-notch maintenance and repair services using state-of-the-art equipment. Trust us to keep your car running smoothly.</p>
+                <a href="#" class="btn btn-primary large-btn">SCHEDULE YOUR SERVICE</a>
+            </div>
+        </section>
+
+        <section class="final-cta">
+            <h3>THE FUTURE OF AUTOMOTIVE AWAITS.</h3>
+            <a href="#contact" class="btn btn-primary">CONTACT US</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CarHub. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Hero Video Fade-out
+        const heroVideo = document.getElementById('heroVideo');
+
+        if (heroVideo) {
+            heroVideo.addEventListener('ended', () => {
+                heroVideo.classList.add('fade-out');
+            });
+        }
+
+        // Scroll listener for header transparency
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.body.classList.add('scrolled');
+            } else {
+                document.body.classList.remove('scrolled');
+            }
+        });
+    </script>     
+
+</body>
+</html>
