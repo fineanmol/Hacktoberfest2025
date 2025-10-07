@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> primeFactors(int n) {
+    vector<int> factors;
+    for (int i = 2; i * i <= n; i++) {
+        while (n % i == 0) {
+            factors.push_back(i);
+            n /= i;
+        }
+    }
+    if (n > 1)
+        factors.push_back(n);
+    return factors;
+}
+
+int main() {
+    int n;
+    cout << "Enter number: ";
+    cin >> n;
+    vector<int> res = primeFactors(n);
+    cout << "Prime Factors: ";
+    for (int x : res) cout << x << " ";
+    return 0;
+}
