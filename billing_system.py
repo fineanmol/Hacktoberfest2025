@@ -241,10 +241,10 @@ class Bill_App:
         self.m_h_g_p = self.hand_gloves.get()*12
         self.m_s_p = self.sanitizer.get()*2
         self.m_m_p = self.mask.get()*5
-        self.m_s_p = self.syrup.get()*30
+        self.m_sy_p = self.syrup.get()*30
         self.m_c_p = self.cream.get()*5
         self.m_t_g_p = self.thermal_gun.get()*15
-        self.total_medical_price = float(self.m_m_p+self.m_h_g_p+self.m_s_p+self.m_c_p+self.m_t_g_p+self.m_s_p)
+        self.total_medical_price = float(self.m_m_p+self.m_h_g_p+self.m_s_p+self.m_c_p+self.m_t_g_p+self.m_sy_p)
 
         self.medical_price.set("Rs. "+str(self.total_medical_price))
         self.c_tax = round((self.total_medical_price*0.05), 2)
@@ -259,7 +259,7 @@ class Bill_App:
         self.total_grocery_price = float(self.g_r_p+self.g_f_o_p+self.g_w_p+self.g_s_p+self.g_f_p+self.g_m_p)
 
         self.grocery_price.set("Rs. " + str(self.total_grocery_price))
-        self.g_tax = round((self.total_grocery_price*5), 2)
+        self.g_tax = round((self.total_grocery_price*0.05), 2)
         self.grocery_tax.set("Rs. " + str(self.g_tax))
 
         self.c_d_s_p = self.sprite.get()*10
@@ -304,7 +304,7 @@ class Bill_App:
         if self.cream.get() != 0:
             self.txtarea.insert(END, f"\n Cream\t\t{self.cream.get()}\t\t{self.m_c_p}")
         if self.thermal_gun.get() != 0:
-            self.txtarea.insert(END, f"\n Thermal Gun\t\t{self.sanitizer.get()}\t\t{self.m_t_g_p}")
+            self.txtarea.insert(END, f"\n Thermal Gun\t\t{self.thermal_gun.get()}\t\t{self.m_t_g_p}")
     # ==============Grocery============================
         if self.rice.get() != 0:
             self.txtarea.insert(END, f"\n Rice\t\t{self.rice.get()}\t\t{self.g_r_p}")
