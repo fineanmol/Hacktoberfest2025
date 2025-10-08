@@ -2712,4 +2712,10 @@ contributors = [
     fullname: "Pratishta Holkar",
     username: "https://github.com/Pratishta08",
   },
+
+  {
+    id: 476,
+    fullname: "Shekhar Kumar",
+    username: "https://github.com/shekhar-kumar",
+  },
 ];
