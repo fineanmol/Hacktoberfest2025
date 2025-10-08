@@ -2,6 +2,48 @@ import json
 import os
 
 DATA_FILE = "tasks.json"
+import shlex
+
+def require_int(args, usage):
+    if not args or not args[0].isdigit():
+        print(usage)
+        return None
+    return int(args[0])
+
+def cmd_list(tasks, args):
+    list_tasks(tasks)
+
+def cmd_add(tasks, args):
+    if not args:
+        print("Usage: add <title>")
+        return
+    add_task(tasks, " ".join(args))  # allow spaces in title
+
+def cmd_done(tasks, args):
+    n = require_int(args, "Usage: done <num>")
+    if n is not None:
+        toggle_task(tasks, n)
+
+def cmd_del(tasks, args):
+    n = require_int(args, "Usage: del <num>")
+    if n is not None:
+        delete_task(tasks, n)
+
+def cmd_help(tasks, args):
+    help_menu()
+
+def cmd_quit(tasks, args):
+    print("Bye!")
+    return False  # signal to exit loop
+
+DISPATCH = {
+    "list": cmd_list,
+    "add": cmd_add,
+    "done": cmd_done,
+    "del":  cmd_del,
+    "help": cmd_help,
+    "quit": cmd_quit,
+}
 
 def load_tasks():
     if not os.path.exists(DATA_FILE):
@@ -75,30 +117,17 @@ def main():
         parts = cmd.split(maxsplit=1)
         action = parts[0].lower()
 
-        if action == "list":
-            list_tasks(tasks)
-        elif action == "add":
-            if len(parts) == 1:
-                print("Usage: add <title>")
-            else:
-                add_task(tasks, parts[1])
-        elif action == "done":
-            if len(parts) == 1 or not parts[1].isdigit():
-                print("Usage: done <num>")
-            else:
-                toggle_task(tasks, int(parts[1]))
-        elif action == "del":
-            if len(parts) == 1 or not parts[1].isdigit():
-                print("Usage: del <num>")
-            else:
-                delete_task(tasks, int(parts[1]))
-        elif action == "help":
-            help_menu()
-        elif action == "quit":
-            print("Bye!")
-            break
-        else:
+        parts = shlex.split(input("> ").strip())
+        if not parts:
+            continue
+        action, *args = parts
+        handler = DISPATCH.get(action)
+        if not handler:
             print("Unknown command. Type 'help'.")
+            continue
+        keep_running = handler(tasks, args)
+        if keep_running is False:
+            break
 
 if __name__ == "__main__":
     main()
