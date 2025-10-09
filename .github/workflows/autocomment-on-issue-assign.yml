@@ -1,0 +1,25 @@
+name: Auto Comment on Issue Assignment
+
+on:
+  issues:
+    types: [assigned]
+
+permissions:
+  issues: write
+  contents: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on issue assignment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `👤 Issue assigned to @${context.payload.assignee.login}.`
+            });
