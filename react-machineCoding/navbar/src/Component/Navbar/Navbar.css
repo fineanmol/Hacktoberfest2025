@@ -1,0 +1,44 @@
+.navbarContainer{
+    width: 100%;
+    background-color: #fbfbfb;
+    border-bottom: 4px solid lightblue;    
+    padding: 10px;
+    display: flex;
+    flex-direction: flex-start;
+    height: auto;
+}
+nav{
+    display: flex;
+    flex-direction: row;
+}
+.navbarOptions{
+    padding: 5px;
+    cursor: pointer;
+    margin: auto 5px auto 25px;
+}
+.sandwichContainer{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.sandwichLayer{
+    height: 4px;
+    width: 40px;
+    background-color: lightblue;
+    margin: 4px;
+    display: flex;
+    flex-direction: column;    
+}
+.sandwichOptionContainer{
+    position: absolute;
+    margin-top: 7vh;
+}
+.sandwichOption{
+ border-bottom: 2px solid lightblue;
+ padding: 10px;   
+}
+.sandwichOption:hover{
+    background-color: whitesmoke;
+}

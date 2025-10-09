@@ -1,0 +1,37 @@
+.quiz-options{
+    background-color: whitesmoke;
+    border: 1px solid lightgrey;
+    margin: 5px auto 5px auto;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.question-holder{
+    border: 2px solid grey;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px auto 20px auto;
+}
+.game-holder{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+}
+.quiz-options:hover{
+    background-color: lightgrey;
+}
+button{
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.score{
+    font-size: 20px
+}
+
+.result-question{
+    padding: 10px;
+}
