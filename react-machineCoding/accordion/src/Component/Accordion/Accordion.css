@@ -1,0 +1,27 @@
+.componentContainer {
+    width: 50%;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+.accordionContainer {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.accordionHeader {
+    background-color: #f1f1f1;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.accordionBody {
+    padding: 10px;
+    font-size: 12px;
+    color: #333;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+}

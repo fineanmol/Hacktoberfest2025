@@ -1,0 +1,32 @@
+form{
+  padding: 45px;
+}
+
+.input-holder {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 40%;
+}
+
+.input-holder label {
+  display: inline-block;
+  width: 150px; /* Fixed width for consistent alignment */
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.input-holder input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.input-holder p {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #ff0000; /* Highlighted red for error messages */
+}

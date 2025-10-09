@@ -1,0 +1,31 @@
+
+.game-board{
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  width: max-content;
+  margin: 5vh;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.game-cell{
+  height: 50px;
+  width: 50px;
+  background-color: whitesmoke;
+  border: 1px solid lightblue;
+  padding: 2px;
+  cursor: pointer;
+  font-size: 14px;
+  align-items: center;  
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+  width: 60%;
+  margin: auto;
+}
+
+.config-section{
+  border-radius: 5px;
+  padding: 25px;
+  justify-content: space-between;
+}
+
+.config-option{
+  padding: 10px;
+}
+
+
+.passwordHolder{
+  padding: 10px;
+  font-size: 20px
+}

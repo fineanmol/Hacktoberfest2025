@@ -1,0 +1,31 @@
+.tile{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #cad9e7;
+    margin-top: 10px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50px;
+}
+
+.tileButtonContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.tileButton{
+    width: 65px;
+    height: 25px;
+    margin-top: 15px;
+    margin-left: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+}
+
+.tileInput{
+    height: 25px;
+    margin-top: 10px;
+}

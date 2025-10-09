@@ -1,0 +1,30 @@
+.buttonHolder{
+    border: 2px solid darkgray;
+    width: 25%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+    color: black;
+    background-color: floralwhite;
+    cursor: pointer;
+}
+span{
+    font-size: 16px;
+    margin-right: 20px;
+}
+.buttonHolder:hover{
+    border: 2px solid maroon;
+    width: 25%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+    color: maroon
+}
+.buttonHolderLiked{
+    border: 2px solid maroon;
+    width: 25%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+    color: maroon
+}

@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+.user-card{
+  background-color: #fbfbfb;
+  border: 2.9px solid lightblue;
+  padding: 25px;
+  margin: 25px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+}
+img{
+  border-radius: 50%;
+}
+.right-side{
+  margin-left: 35px;
+}
+.description{
+  padding: 5px;
+  text-align: left;
+}

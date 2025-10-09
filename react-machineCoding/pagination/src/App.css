@@ -1,0 +1,37 @@
+.data-holder {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.data-item {
+  background-color: #fbfbfb;
+  border: 2px solid lightblue;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 2px;
+  font-size: 14px;
+}
+
+button {
+  background-color: white;
+  border: 1px solid lightblue;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-top: 10px;
+  color: black;
+}
+
+button:hover {
+  background-color: lightgray;
+}
+
+/* Highlight the selected button */
+button.active {
+  background-color: aliceblue;
+  color: black;
+  border: 2px solid lightblue;
+}
