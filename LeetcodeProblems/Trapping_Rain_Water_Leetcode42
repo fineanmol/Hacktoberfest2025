@@ -1,0 +1,31 @@
+// Herewith helping young learners with the LeetcodeProblem Trapping Rain Water
+//THe underlying problem uses Dynamic Programming 
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        //modification of two pointer algorithm
+int l=0,r=height.size()-1;
+int lmax=height[l];
+int rmax=height[r];
+int w=0;
+
+
+        while(l<=r){
+
+            if(height[l]<=height[r]){
+                if(height[l]>=lmax)lmax=height[l];
+                else w+=lmax-height[l];
+                l++;
+            }
+
+
+            else{
+
+ if(height[r]>=rmax)rmax=height[r];
+                else w+=rmax-height[r];
+                r--;
+            }
+        }
+    return w;}
+};
