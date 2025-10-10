@@ -685,3 +685,45 @@ body {
   background-color: #FE0C43;
 }
 
+
+/* Pagination styles - align with brand colors */
+#pagination .btn {
+  border-radius: 8px;
+  font-weight: 600;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#pagination .btn-primary {
+  background-color: #FE0C43;
+  border-color: #FE0C43;
+  color: #ffffff;
+}
+
+#pagination .btn-primary:hover,
+#pagination .btn-primary:focus {
+  background-color: #E76898;
+  border-color: #E76898;
+  color: #251D29;
+}
+
+#pagination .btn-outline-secondary {
+  color: #E76898;
+  border-color: #E76898;
+  background-color: transparent;
+}
+
+#pagination .btn-outline-secondary:hover,
+#pagination .btn-outline-secondary:focus {
+  color: #251D29;
+  background-color: #E76898;
+  border-color: #E76898;
+}
+
+#pagination .btn:disabled,
+#pagination .btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
