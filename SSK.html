@@ -1,43 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarHub - Your Automotive Destination</title>
+    <!-- Metadata defining the document type and settings -->
+    <meta charset="UTF-8"> <!-- Character encoding for special symbols -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design for all devices -->
+    
+    <title>CarHub - Your Automotive Destination</title> <!-- Page title shown in the browser tab -->
+
+    <!-- External CSS file that contains all styling rules -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Website tab icon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts integration for stylish modern typography -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
+    <!-- Decorative background (likely animated or grid-based, styled in CSS) -->
     <div class="grid-background"></div>
 
+    <!-- ===== HEADER SECTION ===== -->
     <header class="main-header">
+        <!-- Logo area -->
         <div class="logo">
-            <img src="logo.png" alt="CarHub Logo">
+            <img src="logo.png" alt="CarHub Logo"> <!-- Company logo -->
         </div>
+
+        <!-- Navigation bar with internal links -->
         <nav class="main-nav">
             <ul>
+                <!-- Each list item links to a section on the same page -->
                 <li><a href="#buy">Buy Cars</a></li>
                 <li><a href="#sell">Sell Cars</a></li>
                 <li><a href="#service">Service</a></li>
                 <li><a href="#vintage">Vintage</a></li>
                 <li><a href="#about">About Us</a></li>
+                <!-- “Login” and “Signup” would typically lead to separate pages -->
                 <li><a href="Login">Login</a></li>
                 <li><a href="Signup">Sign</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- ===== MAIN CONTENT SECTION ===== -->
     <main>
+
+        <!-- ===== HERO SECTION ===== -->
         <section class="hero-section">
+            <!-- Background video showing cars or intro animation -->
             <div class="background-media">
                 <video autoplay muted playsinline src="intropagevd.mp4" id="heroVideo"></video>
             </div>
+
+            <!-- Transparent overlay (adds dark tint or visual focus) -->
             <div class="hero-overlay"></div>
+
+            <!-- Text and call-to-action buttons centered over video -->
             <div class="hero-content">
                 <h1>WHERE EVERY JOURNEY BEGINS</h1>
                 <p class="tagline">DISCOVER, ACQUIRE, EXCEL.</p>
+
+                <!-- Primary and secondary CTA buttons -->
                 <div class="cta-buttons">
                     <a href="#buy" class="btn btn-primary">EXPLORE INVENTORY</a>
                     <a href="#sell" class="btn btn-secondary">SELL YOUR CAR</a>
@@ -45,19 +71,27 @@
             </div>
         </section>
 
+        <!-- ===== BUY SECTION ===== -->
         <section class="usp-showcase" id="buy">
             <div class="usp-text-block centered-text">
                 <h2>YOUR NEXT DRIVING EXPERIENCE.</h2>
                 <p class="padded-bottom">Curated selection of new and pre-owned vehicles. Unbeatable prices, unmatched quality.</p>
                 <a href="#" class="btn btn-secondary">VIEW ALL CARS</a>
             </div>
-            <!-- <div class="usp-image-block" style="background-image: url('https://via.placeholder.com/1600x900/444444/FFFFFF?text=Luxury+Car+Interior');"></div> -->
+            <!-- Optional background image block (commented out for now) -->
+            <!-- <div class="usp-image-block" style="background-image: url('...');"></div> -->
         </section>
 
+        <!-- ===== SELL SECTION ===== -->
         <section class="usp-showcase-merged" id="sell">
             <div class="merged-content-block full-video-card">
+                <!-- Looping background video for this section -->
                 <video autoplay loop muted playsinline src="Sellingintropage.mp4" class="card-bg-video"></video>
+
+                <!-- Dark overlay for readability -->
                 <div class="card-bg-overlay"></div>
+
+                <!-- Text content displayed over the video -->
                 <div class="merged-text-content-overlay">
                     <h2>SEAMLESS SELLING. MAXIMIZED VALUE.</h2>
                     <p>Effortlessly sell your vehicle. Best market prices guaranteed, smooth transactions.</p>
@@ -66,6 +100,7 @@
             </div>
         </section>
 
+        <!-- ===== SERVICE SECTION ===== -->
         <section class="usp-showcase-merged" id="service">
             <div class="merged-content-block full-video-card">
                 <video autoplay loop muted playsinline src="Moderncarsintropage.mp4" class="card-bg-video"></video>
@@ -78,6 +113,7 @@
             </div>
         </section>
 
+        <!-- ===== VINTAGE SECTION ===== -->
         <section class="usp-showcase-merged" id="vintage">
             <div class="merged-content-block full-video-card">
                 <video autoplay loop muted playsinline src="Classicintropage.mp4" class="card-bg-video"></video>
@@ -90,6 +126,7 @@
             </div>
         </section>
 
+        <!-- ===== SERVICE USP SECTION (ADDITIONAL PROMO) ===== -->
         <section class="service-usp-section">
             <div class="service-usp-content">
                 <h3>THE BEST CARE FOR YOUR VEHICLE</h3>
@@ -98,28 +135,38 @@
             </div>
         </section>
 
+        <!-- ===== FINAL CTA (CALL TO ACTION) ===== -->
         <section class="final-cta">
             <h3>THE FUTURE OF AUTOMOTIVE AWAITS.</h3>
             <a href="#contact" class="btn btn-primary">CONTACT US</a>
         </section>
+
     </main>
 
+    <!-- ===== FOOTER SECTION ===== -->
     <footer>
         <p>&copy; 2025 CarHub. All Rights Reserved.</p>
     </footer>
 
+    <!-- ===== JAVASCRIPT INTERACTIVITY ===== -->
     <script>
-        // Hero Video Fade-out
+        // === HERO VIDEO FADE-OUT EFFECT ===
+        // Selects the hero video element by its ID
         const heroVideo = document.getElementById('heroVideo');
 
+        // Adds an event listener for when the video finishes playing
         if (heroVideo) {
             heroVideo.addEventListener('ended', () => {
+                // Adds a CSS class that fades the video out visually
                 heroVideo.classList.add('fade-out');
             });
         }
 
-        // Scroll listener for header transparency
+        // === SCROLL-BASED HEADER EFFECT ===
+        // This detects how far the user has scrolled down the page
         window.addEventListener('scroll', function() {
+            // If scrolled more than 50px, add a “scrolled” class to body
+            // Typically used to make the navbar opaque or smaller
             if (window.scrollY > 50) {
                 document.body.classList.add('scrolled');
             } else {
