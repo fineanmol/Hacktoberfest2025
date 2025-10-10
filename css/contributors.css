@@ -646,3 +646,42 @@ body {
   font-weight: 600;
   box-shadow: inset 120px 0 0 0 #fe0c43;
 }
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.socials-element {
+  text-align: center;
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.socials-element-link {
+  background-color: #E76898;
+  color: #ffffff;
+  text-decoration: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50%;
+}
+
+.socials-element-link:hover {
+  transition: 0.45s;
+  color: #251D29;
+  background-color: #FE0C43;
+}
+
