@@ -1,0 +1,217 @@
+/**
+ * LeetCode Problem #44: Wildcard Matching
+ * 
+ * Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+ * - '?' Matches any single character.
+ * - '*' Matches any sequence of characters (including the empty sequence).
+ * 
+ * Example 1:
+ * Input: s = "aa", p = "a"
+ * Output: false
+ * 
+ * Example 2:
+ * Input: s = "aa", p = "*"
+ * Output: true
+ * 
+ * Example 3:
+ * Input: s = "cb", p = "?a"
+ * Output: false
+ */
+
+class Solution {
+public:
+    // APPROACH 1: Recursive Solution (Brute Force)
+    // Time Complexity: O(2^(n+m)) 
+    // Space Complexity: O(n+m) 
+    bool solveRecursive(string &s, string &p, int i, int j) {
+        // Base case: Both strings exhausted
+        if (i < 0 && j < 0) {
+            return true;
+        }
+        
+        // Pattern exhausted but string remains
+        if (i >= 0 && j < 0) {
+            return false;
+        }
+        
+        // String exhausted but pattern remains
+        // Only valid if remaining pattern consists of all '*'
+        if (i < 0 && j >= 0) {
+            for (int k = 0; k <= j; k++) {
+                if (p[k] != '*') {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        // Character match or '?' wildcard
+        if (s[i] == p[j] || p[j] == '?') {
+            return solveRecursive(s, p, i - 1, j - 1);
+        }
+        
+        // '*' wildcard: two choices
+        // 1. Match empty sequence: move pattern pointer (i, j-1)
+        // 2. Match one or more characters: move string pointer (i-1, j)
+        if (p[j] == '*') {
+            return solveRecursive(s, p, i - 1, j) || solveRecursive(s, p, i, j - 1);
+        }
+        
+        // Characters don't match
+        return false;
+    }
+    
+    // APPROACH 2: Memoization (Top-Down DP)
+    // Time Complexity: O(n*m)
+    // Space Complexity: O(n*m) 
+    bool solveMemoization(string &s, string &p, int i, int j, vector<vector<int>> &dp) {
+        // Base cases (same as recursive)
+        if (i < 0 && j < 0) {
+            return true;
+        }
+        
+        if (i >= 0 && j < 0) {
+            return false;
+        }
+        
+        if (i < 0 && j >= 0) {
+            for (int k = 0; k <= j; k++) {
+                if (p[k] != '*') {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        // Check if already computed
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+        
+        // Character match or '?' wildcard
+        if (s[i] == p[j] || p[j] == '?') {
+            return dp[i][j] = solveMemoization(s, p, i - 1, j - 1, dp);
+        }
+        
+        // '*' wildcard
+        if (p[j] == '*') {
+            return dp[i][j] = solveMemoization(s, p, i - 1, j, dp) || 
+                              solveMemoization(s, p, i, j - 1, dp);
+        }
+        
+        // No match
+        return dp[i][j] = false;
+    }
+    
+    // APPROACH 3: Tabulation (Bottom-Up DP)
+    // Time Complexity: O(n*m)
+    // Space Complexity: O(n*m)
+    bool solveTabulation(string &s, string &p) {
+        int n = s.length();
+        int m = p.length();
+        
+        // dp[i][j] = true if first i chars of s match first j chars of p
+        vector<vector<bool>> dp(n + 1, vector<bool>(m + 1, false));
+        
+        // Empty string matches empty pattern
+        dp[0][0] = true;
+        
+        // Empty string can only match pattern with all '*'
+        for (int j = 1; j <= m; j++) {
+            bool allStars = true;
+            for (int k = 1; k <= j; k++) {
+                if (p[k - 1] != '*') {
+                    allStars = false;
+                    break;
+                }
+            }
+            dp[0][j] = allStars;
+        }
+        
+        // Fill the DP table
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                // Character match or '?' wildcard
+                if (s[i - 1] == p[j - 1] || p[j - 1] == '?') {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+                // '*' wildcard
+                else if (p[j - 1] == '*') {
+                    // Match empty OR match one or more characters
+                    dp[i][j] = dp[i][j - 1] || dp[i - 1][j];
+                }
+                // No match
+                else {
+                    dp[i][j] = false;
+                }
+            }
+        }
+        
+        return dp[n][m];
+    }
+    
+    // APPROACH 4: Space Optimized (Bottom-Up DP)
+    // Time Complexity: O(n*m)
+    // Space Complexity: O(m) 
+    bool solveSpaceOptimized(string &s, string &p) {
+        int n = s.length();
+        int m = p.length();
+        
+        // Use two 1D arrays instead of 2D
+        vector<bool> prev(m + 1, false);
+        vector<bool> curr(m + 1, false);
+        
+        // Empty string matches empty pattern
+        prev[0] = true;
+        
+        // Empty string can only match pattern with all '*'
+        for (int j = 1; j <= m; j++) {
+            bool allStars = true;
+            for (int k = 1; k <= j; k++) {
+                if (p[k - 1] != '*') {
+                    allStars = false;
+                    break;
+                }
+            }
+            prev[j] = allStars;
+        }
+        
+        // Fill the DP table row by row
+        for (int i = 1; i <= n; i++) {
+            curr[0] = false; // Empty pattern can't match non-empty string
+            
+            for (int j = 1; j <= m; j++) {
+                // Character match or '?' wildcard
+                if (s[i - 1] == p[j - 1] || p[j - 1] == '?') {
+                    curr[j] = prev[j - 1];
+                }
+                // '*' wildcard
+                else if (p[j - 1] == '*') {
+                    curr[j] = curr[j - 1] || prev[j];
+                }
+                // No match
+                else {
+                    curr[j] = false;
+                }
+            }
+            
+            prev = curr;
+        }
+        
+        return prev[m];
+    }
+    
+    // Main function - using the most optimized approach
+    bool isMatch(string s, string p) {
+        // Uncomment the approach you want to use:
+        
+        // return solveRecursive(s, p, s.length() - 1, p.length() - 1);
+        
+        // vector<vector<int>> dp(s.length(), vector<int>(p.length(), -1));
+        // return solveMemoization(s, p, s.length() - 1, p.length() - 1, dp);
+        
+        // return solveTabulation(s, p);
+        
+        return solveSpaceOptimized(s, p);
+    }
+};
