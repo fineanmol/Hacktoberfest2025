@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&subset=latin-ext);
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap");
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900&subset=latin-ext);
 :root {
   --white: white;
@@ -44,7 +44,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Montserrat, sans-serif;
+  font-family: "JetBrains Mono", monospace;
   line-height: 1.5;
 }
 body,
@@ -64,14 +64,12 @@ body {
   min-height: 100vh;
   padding: 0 0 1.5rem;
   position: relative;
-  font-family: "Open Sans", sans-serif;
+  font-family: "JetBrains Mono", monospace;
   font-size: 13px;
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "JetBrains Mono", monospace;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
@@ -107,8 +105,8 @@ body {
   transition: 0.5s;
 }
 .light #back-to-top-btn {
-  color: #7c7575;
-  background-color: rgba(255, 255, 255, 0.1);
+  color: rgb(242, 244, 251);
+  background-color: #d43370;
 }
 .container {
   position: relative;
@@ -175,7 +173,7 @@ a:hover {
   font-weight: 700;
   cursor: default;
   font-size: 2rem;
-  font-family: "Special Elite", cursive;
+  font-family: "JetBrains Mono", monospace;
   transition: all 1s;
 }
 .heading:hover {
@@ -183,7 +181,7 @@ a:hover {
   transition: 1s;
 }
 .content {
-  margin-top: 80px;
+  margin-top: 100px;
 }
 .box {
   position: relative;
@@ -199,14 +197,14 @@ a:hover {
   width: 100%;
   cursor: pointer;
   border-radius: 0.4rem;
-  padding: 15px 8px 15px 70px;
+  padding: 15px 8px 15px 60px;
   margin: 10px;
   font-size: 1rem;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   letter-spacing: 0;
-  transition: letter-spacing 0.5s;
+  transition: letter-spacing 0.5s, transform 0.3s ease-out; /* Added transform to transition */
 }
 @media (min-width: 768px) {
   .box {
@@ -230,11 +228,10 @@ a:hover {
   z-index: 10;
 }
 .box-item:hover {
-  size: 30cm;
   color: rgb(255, 255, 255);
   letter-spacing: 2px;
   font-weight: 700;
-  /* transform: rotate(3deg); */
+  transform: translateY(-5px) scale(1.02); /* Added lift and scale effect */
   transition: left 1s cubic-bezier(0.86, 0, 0.07, 1);
 }
 .box-item::before {
@@ -276,11 +273,11 @@ a:hover {
   position: absolute;
   top: 2px;
   left: 3px;
-  width: 50px;
+  width: 40px;
   float: left;
   margin-right: 15px;
   padding: 4px;
-  border-radius: 50%;
+  border-radius: 0;
 }
 .box-item:hover a {
   color: #fff;
@@ -301,7 +298,7 @@ a:hover {
 }
 #stats {
   background-color: var(--footer-color);
-  padding: 20px;
+  padding: 30px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -419,18 +416,31 @@ a:hover {
   transform-origin: bottom center;
 }
 @keyframes shrinkjump {
-  10%,
-  35% {
-    transform: scale(2, 0.2) translate(0, 0);
+  0% {
+    transform: scale(1) translate(0, 0); /* Starting point */
   }
-  45%,
-  50% {
-    transform: scale(1) translate(0, -150px);
+  10%, 35% {
+    transform: scale(2, 0.2) translate(0, 0); /* Shrink and squash */
+  }
+  45%, 50% {
+    transform: scale(1) translate(0, -150px); /* Jump up */
+  }
+  65% {
+    transform: scale(1.5, 0.8) translate(0, -75px); /* Mid-air scaling effect */
   }
   80% {
-    transform: scale(1) translate(0, 0);
+    transform: scale(1) translate(0, 0); /* Return to original position */
+  }
+  100% {
+    transform: scale(1) translate(0, 0); /* Ensure end state matches start state */
   }
 }
+
+/* Applying the keyframes */
+.element {
+  animation: shrinkjump 3s ease-in-out infinite; /* Adjust timing and ease */
+}
+
 .word span:nth-child(8).active {
   animation: falling 2s ease-out;
   transform-origin: bottom center;
@@ -538,6 +548,7 @@ body {
   transition: all 0.2s ease-in-out;
   background: var(--darkbg);
   color: var(--darkt);
+  font-family: "JetBrains Mono", monospace;
 }
 .light {
   background: var(--lightbg);

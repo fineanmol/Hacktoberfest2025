@@ -1,13 +1,82 @@
+
 // Initialize AOS (Animate On Scroll)
 AOS.init();
 
 // Array containing contributors data
 const Contributors = contributors;
 
+// ---------- Utilities for safe rendering and URL parsing ----------
+function getGithubUsernameFromUrl(possibleUrl) {
+  try {
+    if (typeof possibleUrl !== "string" || possibleUrl.trim() === "") return null;
+    // Accept plain usernames as well as full URLs
+    if (!possibleUrl.includes("/")) return possibleUrl.trim();
+    const url = new URL(possibleUrl);
+    if (url.hostname !== "github.com") return null;
+    const path = url.pathname.replace(/^\/+/, "").split("/");
+    const username = path[0] || null;
+    return username && username.length > 0 ? username : null;
+  } catch (_) {
+    // Handle malformed URLs like 'https://github,com/...'
+    const fixed = possibleUrl.replace(",", ".");
+    try {
+      const url = new URL(fixed);
+      if (url.hostname !== "github.com") return null;
+      const path = url.pathname.replace(/^\/+/, "").split("/");
+      const username = path[0] || null;
+      return username && username.length > 0 ? username : null;
+    } catch (__){
+      return null;
+    }
+  }
+}
+
+function createAvatarImg(username, eager = false) {
+  const img = document.createElement("img");
+  img.loading = eager ? "eager" : "lazy";
+  img.decoding = "async";
+  img.width = 40;
+  img.height = 40;
+  // lightweight placeholder to reserve space
+  img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+  img.dataset.src = username
+    ? `https://avatars.githubusercontent.com/${username}`
+    : "https://avatars.githubusercontent.com/ghost";
+  if (eager) {
+    img.src = img.dataset.src;
+    img.removeAttribute("data-src");
+    img.setAttribute("fetchpriority", "high");
+  }
+  img.alt = username ? `${username}'s avatar` : "avatar";
+  return img;
+}
+
+function createContributorAnchor(item, eager = false) {
+  const anchor = document.createElement("a");
+  anchor.className = "box-item";
+  const username = getGithubUsernameFromUrl(item.username);
+  const href = typeof item.username === "string" ? item.username : "";
+  if (href) {
+    anchor.setAttribute("href", href);
+    anchor.setAttribute("target", "_blank");
+    anchor.setAttribute("rel", "noopener noreferrer");
+  }
+
+  const nameSpan = document.createElement("span");
+  nameSpan.textContent = item.fullname || "Anonymous";
+  anchor.appendChild(nameSpan);
+
+  const img = createAvatarImg(username, eager);
+  anchor.appendChild(img);
+  return anchor;
+}
+
 // Variables
 const searchbox = document.getElementById("search");
 let searchResult = null;
-let initialContributorsNumber = 72;
+// Pagination state
+let pageSize = 60;
+let currentPage = 1;
 
 // Get the current year dynamically
 const currentYear = new Date().getFullYear();
@@ -55,106 +124,162 @@ function filterUsers(str = "ContributorName", array) {
 /**
  * Renders the contributors on the page.
  * @param {Array} array - The array of contributors to render.
+ * @param {Object} options - render options
+ * @param {boolean} options.paginate - whether to paginate the array
  */
-function render(array) {
-  array.forEach((item) => {
-    let username = document.createElement("span");
-    username.innerHTML = item.fullname;
-
-    let user = document.createElement("a");
-    user.className = "box-item";
-    user.setAttribute("href", item.username);
-    user.setAttribute("id", item.id);
-    user.append(username);
-
-    if (item.id <= initialContributorsNumber) {
-      document.getElementById("contributors").append(user);
-    }
+function render(array, options = { paginate: true }) {
+  const container = document.getElementById("contributors");
+  if (!container) {
+    console.warn("Contributors container not found");
+    return;
+  }
+  const list = options.paginate
+    ? array.slice(0, currentPage * pageSize)
+    : array;
+  list.forEach((item, index) => {
+    // Eager-load the first row or two on initial page for faster perceived load
+    const shouldEagerLoad = currentPage === 1 && index < 12;
+    const anchor = createContributorAnchor(item, shouldEagerLoad);
+    anchor.setAttribute("id", item.id);
+    container.appendChild(anchor);
   });
+  // After rendering batch, invoke lazy loading for avatars
+  setupLazyLoadImages();
+  // And ensure infinite scroll sentinel is available
+  setupLoadMoreOnScroll();
 }
 
 // Load contributors after document loads.
-render(contributors);
+render(contributors, { paginate: true });
 
 /**
  * Loads more contributors when "Load More" button is clicked.
  */
 function loadMore() {
-  if (initialContributorsNumber >= contributors.length) {
-    render(contributors);
+  const container = document.getElementById("contributors");
+  if (!container) return;
+  const totalPages = Math.ceil(contributors.length / pageSize);
+  if (currentPage >= totalPages) {
+    render(contributors, { paginate: true });
   } else {
-    initialContributorsNumber += 84;
-    document.getElementById("contributors").innerHTML =
-      "<div class='text-center' id='loading'>Loading...</div>";
-    render(contributors);
-    document.querySelectorAll("a.box-item").forEach((con) => {
-      con.innerHTML += `<img loading="lazy" src="https://avatars.githubusercontent.com/${
-        con.href.split("https://github.com/")[1]
-      }">`;
-    });
-    document.getElementById("loading").setAttribute("hidden", true);
-    if (initialContributorsNumber >= contributors.length) {
-      document.getElementById("loadMore").setAttribute("hidden", true);
+    currentPage += 1;
+    container.innerHTML = "<div class='text-center' id='loading'>Loading...</div>";
+    render(contributors, { paginate: true });
+    const loading = document.getElementById("loading");
+    if (loading) loading.setAttribute("hidden", true);
+    if (currentPage >= totalPages) {
+      const loadMoreEl = document.getElementById("loadMore");
+      if (loadMoreEl) loadMoreEl.setAttribute("hidden", true);
     }
   }
 }
 
 // Event listener for "Load More" button
 const loadMoreBtn = document.getElementById("loadMore");
-loadMoreBtn.addEventListener("click", loadMore);
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", loadMore);
+}
 
-// Add avatars to contributor links
+// Add avatars to existing contributor links (in case initial render occurred earlier)
 document.querySelectorAll("a.box-item").forEach((con) => {
-  con.innerHTML += `<img loading="lazy" src="https://avatars.githubusercontent.com/${
-    con.href.split("https://github.com/")[1]
-  }">`;
+  const username = getGithubUsernameFromUrl(con.getAttribute("href"));
+  const hasImg = con.querySelector("img");
+  if (!hasImg) {
+    con.appendChild(createAvatarImg(username));
+  }
 });
+setupLazyLoadImages();
+setupLoadMoreOnScroll();
 
-// Event listener for the search box
-searchbox.addEventListener("keyup", async (e) => {
-  searchbox.value !== ""
-    ? document.getElementById("loadMore").classList.add("hidden")
-    : document.getElementById("loadMore").classList.remove("hidden");
+// -------- Lazy loading avatars with IntersectionObserver --------
+function setupLazyLoadImages() {
+  const images = document.querySelectorAll("a.box-item img[data-src]");
+  if (!("IntersectionObserver" in window)) {
+    images.forEach((img) => {
+      img.src = img.dataset.src;
+      img.removeAttribute("data-src");
+    });
+    return;
+  }
+  const imgObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.removeAttribute("data-src");
+        observer.unobserve(img);
+      }
+    });
+  }, { rootMargin: "300px 0px", threshold: 0.01 });
+  images.forEach((img) => imgObserver.observe(img));
+}
 
-  searchResult = await filterUsers(e.target.value, contributors);
-  document.getElementById("contributors").innerHTML =
-    e.target.value !== ""
-      ? "<div class='text-center' id='loading'>Loading...</div>"
-      : "";
-
-  e.target.value !== ""
-    ? searchResult.forEach((item) => {
-        let username = document.createElement("span");
-        username.innerHTML = item.fullname;
-
-        let user = document.createElement("a");
-        user.className = "box-item";
-        user.setAttribute("href", item.username);
-        user.append(username);
-
-        document.getElementById("contributors").append(user);
-      })
-    : contributors.forEach((item) => {
-        let username = document.createElement("span");
-        username.innerHTML = item.fullname;
-
-        let user = document.createElement("a");
-        user.className = "box-item";
-        user.setAttribute("href", item.username);
-        user.append(username);
-        if (item.id <= initialContributorsNumber) {
-          document.getElementById("contributors").append(user);
+// -------- Infinite scroll: auto load more when near bottom --------
+function setupLoadMoreOnScroll() {
+  const loadMoreBtn = document.getElementById("loadMore");
+  if (!loadMoreBtn) return;
+  let sentinel = document.getElementById("load-more-sentinel");
+  if (!sentinel) {
+    sentinel = document.createElement("div");
+    sentinel.id = "load-more-sentinel";
+    sentinel.style.height = "1px";
+    const container = document.getElementById("contributors");
+    if (container) container.appendChild(sentinel);
+  }
+  if (!("IntersectionObserver" in window)) return;
+  const totalPages = Math.ceil(contributors.length / pageSize);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (currentPage < totalPages && (!searchbox || searchbox.value === "")) {
+          loadMore();
         }
-      });
+      }
+    });
+  }, { rootMargin: "200px 0px", threshold: 0 });
+  observer.observe(sentinel);
+}
 
-  document.querySelectorAll("a.box-item").forEach((con) => {
-    con.innerHTML += `<img loading="lazy" src="https://github.com/${
-      con.href.split("https://github.com/")[1]
-    }.png">`;
-  });
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
 
-  document.getElementById("loading").setAttribute("hidden", true);
-});
+// Event listener for the search box with debounce
+if (searchbox) {
+  searchbox.addEventListener(
+    "keyup",
+    debounce(async (e) => {
+      const loadMoreEl = document.getElementById("loadMore");
+      if (loadMoreEl) {
+        if (searchbox.value !== "") loadMoreEl.classList.add("hidden");
+        else loadMoreEl.classList.remove("hidden");
+      }
+
+      searchResult = await filterUsers(e.target.value, contributors);
+      const container = document.getElementById("contributors");
+      if (!container) return;
+      container.innerHTML = e.target.value !== "" ? "<div class='text-center' id='loading'>Loading...</div>" : "";
+
+      if (e.target.value !== "") {
+        searchResult.forEach((item) => {
+          const anchor = createContributorAnchor(item);
+          container.appendChild(anchor);
+        });
+      } else {
+        // Reset pagination when clearing search
+        currentPage = 1;
+        render(contributors, { paginate: true });
+      }
+
+      const loading = document.getElementById("loading");
+      if (loading) loading.setAttribute("hidden", true);
+    }, 200)
+  );
+}
 
 /* Back-to-top button functionality */
 const backToTopButton = document.querySelector("#back-to-top-btn");
