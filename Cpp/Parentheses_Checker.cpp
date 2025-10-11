@@ -1,7 +1,8 @@
 // parentheses_checker.cpp
-// Compile with: g++ -std=c++17 parentheses_checker.cpp -o parentheses_checker
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
 using namespace std;
 
 bool isMatching(char open, char close) {
