@@ -23,33 +23,47 @@ Output: [1,2]
 
 */
 
-class Solution {
-public:
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        // Hash map to count frequencies of each number
-        unordered_map<int, int> freq;
+#include <iostream>
+using namespace std;
 
-        // Count frequencies
-        for (int& num : nums)
-            freq[num]++; // Increment frequency count for each number
-
-        priority_queue<pair<int, int>, vector<pair<int, int>>,
-                       greater<pair<int, int>>>
-            minHeap;
-        for (auto& pair : freq) {
-            int num = pair.first;
-            int count = pair.second;
-            minHeap.push({count, num});
-            if (minHeap.size() > k)
-                minHeap.pop();
-        }
-
-        vector<int> result;
-        while (!minHeap.empty()) {
-            result.push_back(minHeap.top().second);
-            minHeap.pop();
-        }
-
-        return result;
+int main() {
+    int n;
+    scanf("%d", &n);
+    int arr[n];
+    for (int i = 0; i < n; i++) 
+    {
+        scanf("%d", &arr[i]);
     }
-};
+    int k;
+    scanf("%d", &k);
+    int max = arr[0];
+    for (int i = 0; i < n; i++) 
+    {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    int countarr[max + 1] = {0};
+    for (int i = 0; i < n; i++) 
+    {
+        countarr[arr[i]]++;
+    }
+    for (int t = 0; t < k; t++) 
+    {
+        int maxFreq = 0;
+        int num = -1;
+        for (int i = 0; i <= max; i++) 
+        {
+            if (countarr[i] > maxFreq) 
+            {
+                maxFreq = countarr[i];
+                num = i;
+            }
+        }
+        if (num == -1) break; 
+        printf("%d ", num);      
+        countarr[num] = 0;       
+    }
+    return 0;
+}
+
