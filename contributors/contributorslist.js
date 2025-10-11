@@ -2713,3 +2713,64 @@ contributors = [
     username: "https://github.com/Pratishta08",
   },
 ];
+
+
+// Pagination variables
+const contributorsPerPage = 20;
+let currentPage = 1;
+const contributorsContainer = document.getElementById('contributors');
+const boxContainer = document.getElementById('box');
+
+function renderContributors(page) {
+  if (!contributorsContainer) return;
+  contributorsContainer.innerHTML = '';
+  const start = (page - 1) * contributorsPerPage;
+  const end = start + contributorsPerPage;
+  const pageContributors = contributors.slice(start, end);
+  pageContributors.forEach(contributor => {
+    const div = document.createElement('div');
+    div.className = 'contributor-item';
+    div.innerHTML = `<a href="${contributor.username}" target="_blank">${contributor.fullname}</a>`;
+    contributorsContainer.appendChild(div);
+  });
+}
+
+function renderPagination() {
+  if (!boxContainer) return;
+  const totalPages = Math.ceil(contributors.length / contributorsPerPage);
+  let html = '';
+  html += `<nav aria-label="Contributors pagination"><ul class="pagination justify-content-center">`;
+  html += `<li class="page-item${currentPage === 1 ? ' disabled' : ''}"><a class="page-link" href="#" id="prevPage">Previous</a></li>`;
+  for (let i = 1; i <= totalPages; i++) {
+    html += `<li class="page-item${i === currentPage ? ' active' : ''}"><a class="page-link page-num" href="#" data-page="${i}">${i}</a></li>`;
+  }
+  html += `<li class="page-item${currentPage === totalPages ? ' disabled' : ''}"><a class="page-link" href="#" id="nextPage">Next</a></li>`;
+  html += `</ul></nav>`;
+  boxContainer.innerHTML = html;
+
+  // Add event listeners
+  const prevBtn = document.getElementById('prevPage');
+  if (prevBtn) prevBtn.onclick = function(e) { e.preventDefault(); if (currentPage > 1) { currentPage--; updatePagination(); } };
+  const nextBtn = document.getElementById('nextPage');
+  if (nextBtn) nextBtn.onclick = function(e) { e.preventDefault(); if (currentPage < totalPages) { currentPage++; updatePagination(); } };
+  document.querySelectorAll('.page-num').forEach(btn => {
+    btn.onclick = function(e) {
+      e.preventDefault();
+      const page = parseInt(this.getAttribute('data-page'));
+      if (page !== currentPage) {
+        currentPage = page;
+        updatePagination();
+      }
+    };
+  });
+}
+
+function updatePagination() {
+  renderContributors(currentPage);
+  renderPagination();
+}
+
+// Initial render on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  updatePagination();
+});
