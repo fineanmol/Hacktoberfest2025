@@ -2726,4 +2726,9 @@ contributors = [
     fullname: "Shreya Pal",
     username: "https://github.com/PLayerNightQueen16",
   },
+  {
+    id: 476,
+    fullname: "Chinmay Chaturvedi",
+    username: "https://github.com/Devil200207",
+  },
 ];
