@@ -51,6 +51,6 @@ python main.py
 }
 
 
-🎯 Purpose
+##🎯 Purpose
 This script is a meaningful and practical addition to the repository’s Python examples — it helps both beginners and advanced users understand network performance, stability, and reliability.
 It’s also ready for dashboard integration, trend monitoring, and alerting — making it a complete, professional-grade network monitoring tool.
