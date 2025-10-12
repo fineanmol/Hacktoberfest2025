@@ -1,0 +1,11 @@
+[
+    {
+        "timestamp": "2025-10-12 13:54:13",
+        "download_mbps": 25.4,
+        "upload_mbps": 22.62,
+        "ping_ms": 17.63,
+        "latency_ms": 5.8,
+        "jitter_ms": 1.49,
+        "network_score": 100
+    }
+]
