@@ -1,4 +1,4 @@
-# 🚀 Network Speed Monitor
+# 🚀 Network Speed Monitor — Latency, Jitter & Health Score in Python
 
 📝 **Description**  
 This Python utility measures **download & upload speeds**, **ping**, **latency**, and **jitter**, calculates a **Network Health Score**, and logs results in **JSON format** for trend analysis and dashboard integration.
