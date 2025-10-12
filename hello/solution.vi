@@ -1,0 +1,6 @@
+class Solution {
+    static void printHelloWorld() {
+        // code here
+        
+    }
+}
