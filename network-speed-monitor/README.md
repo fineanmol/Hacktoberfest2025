@@ -30,4 +30,28 @@ pip install -r requirements.txt
 ⬇️ Download: 24.88 Mbps  |  ⬆️ Upload: 21.4 Mbps
 📊 Network Health Score: 100/100
 ⚠️ Warning: Poor network detected!  # if applicable
+
 <img width="931" height="139" alt="image" src="https://github.com/user-attachments/assets/e81b889e-c3c6-4522-a44c-1f28b9e01ff9" />
+
+---
+## 📂 Data Logging Example
+{
+  "timestamp": "2025-10-12 10:42:00",
+  "download_mbps": 85.45,
+  "upload_mbps": 21.67,
+  "ping_ms": 14.23,
+  "latency_ms": 13.8,
+  "jitter_ms": 2.1,
+  "network_score": 92
+}
+
+
+Stored in data/daily_summary.json
+---
+
+## 🎯 Purpose
+
+This script is a practical and professional Python networking tool:
+Helps beginners understand network performance, stability, and reliability
+Can be extended to alerts, dashboards, and trend monitoring
+Fully modular and portfolio-ready
