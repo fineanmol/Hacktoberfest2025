@@ -1,0 +1,53 @@
+class Solution {
+    public int numDecodings(String s) {
+        if(s.length()==1){
+            if(s.charAt(0)!='0'){
+                return 1;
+            }
+            return 0;
+        }
+        if(s.charAt(0)=='0'){
+            return 0;
+        }
+        int arr[]=new int[s.length()];
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='0'&&s.charAt(i-1)=='0'){
+                return 0;
+            }
+            arr[i]=s.charAt(i)-'0';
+        }
+        int dp[]=new int[s.length()];
+        dp[0]=1;
+        if(arr[1]==0){
+            if(arr[0]*10+arr[1]==10||arr[0]*10+arr[1]==20){
+                dp[1]=1;
+            }
+            else{
+                return 0;
+            }
+        }
+        else if(arr[0]*10+arr[1]<=26){
+            
+            dp[1]=2;
+        }
+        else{
+            dp[1]=1;
+        }
+        for(int i=2;i<s.length();i++){
+            int temp=arr[i-1]*10+arr[i];
+            if(arr[i]==0){
+                if(temp>26){
+                    return 0;
+                }
+                dp[i]=dp[i-2];
+            }
+            else if(temp<=26&&temp>=10){
+                dp[i]=dp[i-1]+dp[i-2];
+            }
+            else{
+                dp[i]=dp[i-1];
+            }
+        }
+        return dp[s.length()-1];
+    }
+}
