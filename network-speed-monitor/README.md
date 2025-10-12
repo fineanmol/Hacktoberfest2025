@@ -22,9 +22,12 @@ This Python utility measures **download & upload speeds**, **ping**, **latency**
 ```bash
 pip install -r requirements.txt
 ```
+
+---
 ## 🧾 Output Example
 
 🏓 Ping: 29.07 ms  |  📶 Latency: 5.0 ms  |  🔄 Jitter: 1.35 ms
 ⬇️ Download: 24.88 Mbps  |  ⬆️ Upload: 21.4 Mbps
 📊 Network Health Score: 100/100
 ⚠️ Warning: Poor network detected!  # if applicable
+<img width="931" height="139" alt="image" src="https://github.com/user-attachments/assets/e81b889e-c3c6-4522-a44c-1f28b9e01ff9" />
