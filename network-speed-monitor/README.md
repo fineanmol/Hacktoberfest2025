@@ -1,56 +1,23 @@
-Pull Request: Add Network Speed Monitor Python Program
+# 🚀 Network Speed Monitor
 
-📝 Description
-This pull request adds a new Python utility script — Network Speed Monitor — that measures internet download/upload speeds, ping, latency, and jitter using the speedtest-cli and ping3 modules.
-It also calculates a Network Health Score and logs daily summaries in a structured JSON file for visualization.
+📝 **Description**  
+This Python utility measures **download & upload speeds**, **ping**, **latency**, and **jitter**, calculates a **Network Health Score**, and logs results in **JSON format** for trend analysis and dashboard integration.
 
-✨ Features
+---
 
-Uses speedtest-cli to measure download & upload speeds accurately.
+## ✨ Features
+- ⬇️⬆️ **Download & Upload Speeds** using `speedtest-cli`  
+- 🏓 **Ping, Latency & Jitter** using `ping3`  
+- 📊 **Network Health Score** (0–100) based on speed, latency, and jitter  
+- 🗂 **JSON Logging** for dashboard-ready structured data  
+- ⚠️ **Optional Alerts** for poor network conditions  
+- 🛠 **Modular Code** for maintainability and easy expansion  
 
-Measures ping, latency, and jitter for network stability insights.
+---
 
-Calculates a Network Health Score out of 100 based on speed, ping, and jitter.
+## 🚀 How to Run
 
-Logs results in JSON format for dashboards or trend analysis.
+1. Install dependencies:
 
-Optional alert system for low speeds or high latency.
-
-Modular code structure for maintainability and easy expansion.
-
-🚀 How to Run
-
-Install required packages:
-
+```bash
 pip install -r requirements.txt
-
-
-Run the program:
-
-python main.py
-
-
-🧾 Output Example
-
-🏓 Ping: 14.2 ms  |  📶 Latency: 13.8 ms  |  🔄 Jitter: 2.1 ms
-⬇️ Download: 85.45 Mbps  |  ⬆️ Upload: 21.67 Mbps
-📊 Network Health Score: 92/100
-⚠️ Warning: Poor network detected!  # if applicable
-
-
-📂 Data Logging Example
-
-{
-  "timestamp": "2025-10-12 10:42:00",
-  "download_mbps": 85.45,
-  "upload_mbps": 21.67,
-  "ping_ms": 14.23,
-  "latency_ms": 13.8,
-  "jitter_ms": 2.1,
-  "network_score": 92
-}
-
-
-##🎯 Purpose
-This script is a meaningful and practical addition to the repository’s Python examples — it helps both beginners and advanced users understand network performance, stability, and reliability.
-It’s also ready for dashboard integration, trend monitoring, and alerting — making it a complete, professional-grade network monitoring tool.
