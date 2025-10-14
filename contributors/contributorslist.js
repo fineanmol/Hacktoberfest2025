@@ -2712,4 +2712,9 @@ contributors = [
     fullname: "Pratishta Holkar",
     username: "https://github.com/Pratishta08",
   },
+  {
+    id: 476,
+    fullname: "Afreeza Prananta",
+    username: "https://github.com/Afta20",
+  },
 ];
