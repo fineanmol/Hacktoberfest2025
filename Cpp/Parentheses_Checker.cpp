@@ -4,12 +4,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Check if a pair of brackets match
 bool isMatching(char open, char close) {
-    return (open == '(' && close == ')')
-        || (open == '[' && close == ']')
-        || (open == '{' && close == '}');
+    return (open == '(' && close == ')') ||
+           (open == '[' && close == ']') ||
+           (open == '{' && close == '}');
 }
 
+// Check if the string has balanced parentheses/brackets/braces
 bool areParenthesesBalanced(const string &s) {
     stack<char> st;
     for (char ch : s) {
@@ -17,11 +19,10 @@ bool areParenthesesBalanced(const string &s) {
             st.push(ch);
         } else if (ch == ')' || ch == ']' || ch == '}') {
             if (st.empty() || !isMatching(st.top(), ch)) {
-                return false; // closing bracket without matching opening
+                return false; // unmatched closing
             }
             st.pop();
         }
-        // ignore other characters
     }
     return st.empty(); // balanced iff nothing left unmatched
 }
@@ -30,23 +31,15 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    cout << "Enter string to check (single line). Press Ctrl+D/Ctrl+Z to end:\n";
+    cout << "Enter strings to check (Ctrl+D/Ctrl+Z to end):\n";
     string line;
-    // Read whole line (including spaces). For multiple tests, loop or read until EOF.
-    if (!getline(cin, line)) return 0;
 
-    bool balanced = areParenthesesBalanced(line);
-    if (balanced) cout << "Balanced\n";
-    else cout << "Not Balanced\n";
-
-    // Example quick tests (uncomment to run built-in tests)
-    /*
-    vector<string> tests = {
-        "()[]{}", "([{}])", "(]", "([)]", "a + (b - c) * {d / [e + f]}"
-    };
-    for (auto &t : tests) {
-        cout << t << " -> " << (areParenthesesBalanced(t) ? "Balanced" : "Not Balanced") << '\n';
+    // Read multiple lines until EOF
+    while (getline(cin, line)) {
+        if (line.empty()) continue; // skip empty lines
+        bool balanced = areParenthesesBalanced(line);
+        cout << line << " -> " << (balanced ? "Balanced" : "Not Balanced") << '\n';
     }
-    */
+
     return 0;
 }
