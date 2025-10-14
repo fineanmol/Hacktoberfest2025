@@ -38,6 +38,8 @@ class Bill_App:
         self.medical_price = StringVar()
         self.grocery_price = StringVar()
         self.cold_drinks_price = StringVar()
+        # ==============Discount================
+        self.discount = DoubleVar()
     # ==============Customer==========================
         self.c_name = StringVar()
         self.c_phone = StringVar()
@@ -70,6 +72,12 @@ class Bill_App:
 
         bil_btn = Button(F1, text="Search", command=self.find_bill, width=10, bd=7, font=('arial', 12, 'bold'), relief=GROOVE)
         bil_btn.grid(row=0, column=6, pady=5, padx=10)
+
+        # =============Discount Field=====================
+        discount_lbl = Label(F1, text="Discount (%):", bg=bg_color, font=('times new roman', 15, 'bold'))
+        discount_lbl.grid(row=0, column=7, padx=20, pady=5)
+        discount_txt = Entry(F1, width=10, textvariable=self.discount, font='arial 15', bd=7, relief=GROOVE)
+        discount_txt.grid(row=0, column=8, pady=5, padx=10)
 
     # ===================Medical====================================
         F2 = LabelFrame(self.root, text="Medical Purpose", font=('times new roman', 15, 'bold'), bd=10, fg="Black", bg="#badc57")
@@ -275,6 +283,13 @@ class Bill_App:
         self.cold_drinks_tax.set("Rs. "+str(self.c_d_tax))
 
         self.total_bill = float(self.total_medical_price+self.total_grocery_price+self.total_cold_drinks_price+self.c_tax+self.g_tax+self.c_d_tax)
+        # Apply discount
+        self.discount_amount = 0.0
+        if self.discount.get() > 0:
+            self.discount_amount = round(self.total_bill * (self.discount.get()/100.0), 2)
+            self.final_total = round(self.total_bill - self.discount_amount, 2)
+        else:
+            self.final_total = self.total_bill
 
     def welcome_bill(self):
         self.txtarea.delete('1.0', END)
@@ -340,7 +355,10 @@ class Bill_App:
         if self.cold_drinks_tax.get() != '0.0':
             self.txtarea.insert(END, f"\n Cold Drinks Tax\t\t\t{self.cold_drinks_tax.get()}")
 
-        self.txtarea.insert(END, f"\n Total Bil:\t\t\t Rs.{self.total_bill}")
+        # ===============Discount==============================
+        if self.discount.get() > 0:
+            self.txtarea.insert(END, f"\n Discount ({self.discount.get()}%)\t\t\t-Rs.{self.discount_amount}")
+        self.txtarea.insert(END, f"\n Final Total:\t\t\t Rs.{self.final_total}")
         self.txtarea.insert(END, f"\n--------------------------------")
         self.save_bill()
 
