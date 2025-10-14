@@ -1,0 +1,30 @@
+def longest_palindrome(s):
+    # Helper function to expand around center
+    def expand_from_center(left, right):
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            left -= 1
+            right += 1
+        return s[left + 1:right]
+
+    longest = ""
+    for i in range(len(s)):
+        # Odd length palindrome
+        p1 = expand_from_center(i, i)
+        # Even length palindrome
+        p2 = expand_from_center(i, i + 1)
+
+        # Update the longest found
+        if len(p1) > len(longest):
+            longest = p1
+        if len(p2) > len(longest):
+            longest = p2
+
+    return longest
+
+
+# Input from user
+string = input("Enter a string: ")
+result = longest_palindrome(string)
+print(f"The longest palindromic substring is: '{result}'")
+Enter a string: babad
+The longest palindromic substring is: 'bab'
