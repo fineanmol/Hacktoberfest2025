@@ -7,8 +7,8 @@ contributors = [
 
   {
     id: 2,
-    fullname: "Sachin", 
-    username: "https://github.com/mugenkyou", 
+    fullname: "Sachin",
+    username: "https://github.com/mugenkyou",
   },
 
   {
@@ -2487,7 +2487,6 @@ contributors = [
     fullname: "Bailey Henderson",
     username: "https://github.com/baileykh",
   },
-  
 
   {
     id: 415,
@@ -2674,7 +2673,6 @@ contributors = [
     username: "https://github.com/PrateetGadavi166",
   },
 
-
   {
     id: 446,
     fullname: "Vikas jakkula",
@@ -2703,7 +2701,7 @@ contributors = [
     username: "https://github.com/jaycss9",
   },
   {
-    id: 474 ,
+    id: 474,
     fullname: "Amitava Mitra",
     username: "https://github.com/Amitava123",
   },
@@ -2711,5 +2709,10 @@ contributors = [
     id: 475,
     fullname: "Pratishta Holkar",
     username: "https://github.com/Pratishta08",
+  },
+  {
+    id: 476,
+    fullname: "Jéssica Cechin",
+    username: "https://github.com/cechinjessica",
   },
 ];
