@@ -1,0 +1,17 @@
+# Leetcode Problem - 185  Department Top Three Salaries  (Level Hard)
+
+# Write your MySQL query statement below
+
+SELECT d.name AS Department, e.name AS Employee, e.salary AS Salary
+FROM (
+    SELECT *,
+           DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS rnk
+    FROM Employee
+) AS e
+
+ # Join with Department table to get the department name
+JOIN Department AS d
+    ON e.departmentId = d.id
+
+# Only keeping the employees with top 3 unique salaries in their department
+WHERE e.rnk <= 3;
