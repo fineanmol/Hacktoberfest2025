@@ -135,7 +135,7 @@ body {
 @media (max-width: 768px) {
   .form-control,
   .form-control:focus,
-  .from-control:active {
+  .form-control:active {
     width: 14rem;
   }
 }
