@@ -2703,7 +2703,7 @@ contributors = [
     username: "https://github.com/jaycss9",
   },
   {
-    id: 474 ,
+    id: 474,
     fullname: "Amitava Mitra",
     username: "https://github.com/Amitava123",
   },
@@ -2711,5 +2711,10 @@ contributors = [
     id: 475,
     fullname: "Pratishta Holkar",
     username: "https://github.com/Pratishta08",
+  },
+  {
+    id: 476,
+    fullname: "Abhiyansh Vaishnav",
+    username: "https://github.com/abhiyanshh27",
   },
 ];
