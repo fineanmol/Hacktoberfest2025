@@ -98,6 +98,9 @@
             <!-- Contributors name will be displayed here -->
             <div class="box mx-auto my-5 justify-content-center" id="contributors" data-aos="zoom-in-down"></div>
         </div>
+		<button id="sortBtn" class="btn btn-outline-primary mt-2 mt-md-0">
+                Sort A–Z
+        </button>
     </div>
 
     <div class="box mx-auto my-5 justify-content-center" id="box">
@@ -163,6 +166,22 @@
     <script src="./scripts/menu.js" defer></script>
     <script src="./contributors/contributorslist.js" defer></script>
     <script src="./scripts/main.js" defer></script>
+	<script>
+        const sortButton=document.getElementById("sortBtn");
+        const contributorsContainer = document.getElementById("contributors"); 
+        sortButton.addEventListener("click",()=>{
+            const contributors = Array.from(contributorsContainer.children);
+            contributors.sort((a, b) => {
+                const nameA = a.querySelector("span")?.innerText.trim().toLowerCase() || "";
+                const nameB = b.querySelector("span")?.innerText.trim().toLowerCase() || "";
+                return nameA.localeCompare(nameB);
+            });
+
+            contributorsContainer.innerHTML = "";
+            contributors.forEach(ele => contributorsContainer.appendChild(ele));
+        });
+
+    </script>
 </body>
 
 </html>
