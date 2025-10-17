@@ -1,0 +1,42 @@
+{
+  "name": "hacktoberfest2025",
+  "version": "1.0.0",
+  "description": "A beginner-friendly Hacktoberfest project for open source contributions",
+  "main": "index.html",
+  "scripts": {
+    "build": "npm run minify-css && npm run minify-js",
+    "minify-css": "cleancss -o dist/css/style.min.css css/*.css",
+    "minify-js": "uglifyjs scripts/*.js -o dist/js/scripts.min.js",
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "eslint scripts/*.js",
+    "serve": "http-server -p 8080",
+    "dev": "npm run serve"
+  },
+  "keywords": [
+    "hacktoberfest",
+    "open-source",
+    "contributors",
+    "beginner-friendly"
+  ],
+  "author": "Anmol Agarwal",
+  "license": "MIT",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "eslint": "^8.45.0",
+    "http-server": "^14.1.1",
+    "uglify-js": "^3.17.4"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0",
+    "aos": "^2.3.4",
+    "animate.css": "^4.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fineanmol/Hacktoberfest2025.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fineanmol/Hacktoberfest2025/issues"
+  },
+  "homepage": "https://fineanmol.github.io/Hacktoberfest2025/"
+}

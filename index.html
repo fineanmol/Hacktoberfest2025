@@ -76,14 +76,33 @@
                 transform: scale(1.1);
             }
         }
+
+        /* Screen reader only class for accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 
 <body>
 
     <!-- Back-to-top Button -->
-    <button id="back-to-top-btn" title="Go to top" aria-label="Back to top">
+    <button id="back-to-top-btn" 
+            title="Go to top" 
+            aria-label="Back to top"
+            role="button"
+            tabindex="0"
+            type="button">
         <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+        <span class="sr-only">Back to top</span>
     </button>
     
     <!--

@@ -1,0 +1,15 @@
+# Python dependencies for Hacktoberfest2025 project
+# Core dependencies
+PySide6>=6.5.0  # For GUI applications
+decimal>=1.70   # For precise decimal calculations (built-in, but listed for clarity)
+
+# Development dependencies
+pytest>=7.0.0   # For testing
+pytest-cov>=4.0.0  # For test coverage
+black>=22.0.0   # For code formatting
+flake8>=5.0.0   # For linting
+mypy>=1.0.0     # For type checking
+
+# Optional dependencies
+requests>=2.28.0  # For HTTP requests (if needed)
+python-dotenv>=0.19.0  # For environment variables

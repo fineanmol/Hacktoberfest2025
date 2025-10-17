@@ -119,6 +119,10 @@ def main():
                 
                 except (ValueError, decimal.InvalidOperation) as e:
                     print(f"\nError: {str(e)}")
+                    logging.error(f"Invalid input in tip calculation: {str(e)}")
+                except Exception as e:
+                    print(f"\nAn unexpected error occurred: {str(e)}")
+                    logging.error(f"Unexpected error in tip calculation: {str(e)}")
             
             elif choice == '2':
                 print("\nAvailable currencies:")

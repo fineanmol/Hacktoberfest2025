@@ -1,8 +1,48 @@
-// Initialize AOS (Animate On Scroll)
-AOS.init();
+// Initialize AOS (Animate On Scroll) with error handling
+try {
+    AOS.init();
+} catch (error) {
+    console.warn('AOS initialization failed:', error);
+}
 
-// Array containing contributors data
-const Contributors = contributors;
+// Array containing contributors data with error handling
+let Contributors = [];
+try {
+    Contributors = contributors || [];
+} catch (error) {
+    console.error('Error loading contributors data:', error);
+    Contributors = [];
+}
+
+// ---------- Error Handling Utilities ----------
+function handleError(error, context) {
+    console.error(`Error in ${context}:`, error);
+    
+    // Show user-friendly error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ff4444;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 10000;
+        max-width: 300px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    `;
+    errorDiv.textContent = 'Something went wrong. Please refresh the page.';
+    document.body.appendChild(errorDiv);
+    
+    // Remove error message after 5 seconds
+    setTimeout(() => {
+        if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
+        }
+    }, 5000);
+}
 
 // ---------- Utilities for safe rendering and URL parsing ----------
 function getGithubUsernameFromUrl(possibleUrl) {
