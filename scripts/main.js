@@ -77,6 +77,7 @@ let searchResult = null;
 // Pagination state
 let pageSize = 60;
 let currentPage = 1;
+let sortOrder = 'id';
 
 // Get the current year dynamically
 const currentYear = new Date().getFullYear();
@@ -128,14 +129,20 @@ function filterUsers(str = "ContributorName", array) {
  * @param {boolean} options.paginate - whether to paginate the array
  */
 function render(array, options = { paginate: true }) {
+  let displayArray = [...array];
+  if (sortOrder === 'az') {
+    displayArray.sort((a, b) => (a.fullname || '').localeCompare(b.fullname || ''));
+  } else if (sortOrder === 'za') {
+    displayArray.sort((a, b) => (b.fullname || '').localeCompare(a.fullname || ''));
+  }
   const container = document.getElementById("contributors");
   if (!container) {
     console.warn("Contributors container not found");
     return;
   }
   const list = options.paginate
-    ? array.slice(0, currentPage * pageSize)
-    : array;
+    ? displayArray.slice(0, currentPage * pageSize)
+    : displayArray;
   list.forEach((item, index) => {
     // Eager-load the first row or two on initial page for faster perceived load
     const shouldEagerLoad = currentPage === 1 && index < 12;
@@ -252,20 +259,26 @@ function debounce(fn, delay) {
 if (searchbox) {
   searchbox.addEventListener(
     "keyup",
-    debounce(async (e) => {
+    debounce((e) => {
       const loadMoreEl = document.getElementById("loadMore");
       if (loadMoreEl) {
         if (searchbox.value !== "") loadMoreEl.classList.add("hidden");
         else loadMoreEl.classList.remove("hidden");
       }
 
-      searchResult = await filterUsers(e.target.value, contributors);
+      searchResult = filterUsers(e.target.value, contributors);
       const container = document.getElementById("contributors");
       if (!container) return;
       container.innerHTML = e.target.value !== "" ? "<div class='text-center' id='loading'>Loading...</div>" : "";
 
       if (e.target.value !== "") {
-        searchResult.forEach((item) => {
+        let sortedResult = [...searchResult];
+        if (sortOrder === 'az') {
+          sortedResult.sort((a, b) => (a.fullname || '').localeCompare(b.fullname || ''));
+        } else if (sortOrder === 'za') {
+          sortedResult.sort((a, b) => (b.fullname || '').localeCompare(a.fullname || ''));
+        }
+        sortedResult.forEach((item) => {
           const anchor = createContributorAnchor(item);
           container.appendChild(anchor);
         });
@@ -279,6 +292,28 @@ if (searchbox) {
       if (loading) loading.setAttribute("hidden", true);
     }, 200)
   );
+}
+
+// Event listeners for sort buttons
+const sortAzBtn = document.getElementById('sort-az');
+const sortZaBtn = document.getElementById('sort-za');
+if (sortAzBtn) {
+  sortAzBtn.addEventListener('click', () => {
+    sortOrder = 'az';
+    currentPage = 1;
+    const container = document.getElementById("contributors");
+    if (container) container.innerHTML = '';
+    render(contributors, { paginate: true });
+  });
+}
+if (sortZaBtn) {
+  sortZaBtn.addEventListener('click', () => {
+    sortOrder = 'za';
+    currentPage = 1;
+    const container = document.getElementById("contributors");
+    if (container) container.innerHTML = '';
+    render(contributors, { paginate: true });
+  });
 }
 
 /* Back-to-top button functionality */
