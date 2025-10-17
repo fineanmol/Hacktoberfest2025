@@ -2703,7 +2703,7 @@ contributors = [
     username: "https://github.com/jaycss9",
   },
   {
-    id: 474 ,
+    id: 474,
     fullname: "Amitava Mitra",
     username: "https://github.com/Amitava123",
   },
