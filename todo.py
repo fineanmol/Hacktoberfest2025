@@ -48,6 +48,13 @@ def delete_task(tasks, index):
     tasks.pop(index - 1)
     save_tasks(tasks)
     print("Deleted.")
+    
+def clear_all(tasks):
+    confirm = input("Are you sure you want to delete all tasks? (y/n): ")
+    if confirm.lower() == "y":
+        tasks.clear()
+        save_tasks(tasks)
+        print("All tasks cleared!")
 
 def help_menu():
     print("Commands:")
@@ -94,6 +101,8 @@ def main():
                 delete_task(tasks, int(parts[1]))
         elif action == "help":
             help_menu()
+        elif action == "clear":
+            clear_all(tasks)
         elif action == "quit":
             print("Bye!")
             break
