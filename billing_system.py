@@ -38,6 +38,8 @@ class Bill_App:
         self.medical_price = StringVar()
         self.grocery_price = StringVar()
         self.cold_drinks_price = StringVar()
+        # ==============Discount================
+        self.discount = DoubleVar()
     # ==============Customer==========================
         self.c_name = StringVar()
         self.c_phone = StringVar()
@@ -70,6 +72,12 @@ class Bill_App:
 
         bil_btn = Button(F1, text="Search", command=self.find_bill, width=10, bd=7, font=('arial', 12, 'bold'), relief=GROOVE)
         bil_btn.grid(row=0, column=6, pady=5, padx=10)
+
+        # =============Discount Field=====================
+        discount_lbl = Label(F1, text="Discount (%):", bg=bg_color, font=('times new roman', 15, 'bold'))
+        discount_lbl.grid(row=0, column=7, padx=20, pady=5)
+        discount_txt = Entry(F1, width=10, textvariable=self.discount, font='arial 15', bd=7, relief=GROOVE)
+        discount_txt.grid(row=0, column=8, pady=5, padx=10)
 
     # ===================Medical====================================
         F2 = LabelFrame(self.root, text="Medical Purpose", font=('times new roman', 15, 'bold'), bd=10, fg="Black", bg="#badc57")
@@ -275,21 +283,37 @@ class Bill_App:
         self.cold_drinks_tax.set("Rs. "+str(self.c_d_tax))
 
         self.total_bill = float(self.total_medical_price+self.total_grocery_price+self.total_cold_drinks_price+self.c_tax+self.g_tax+self.c_d_tax)
+        # Apply discount
+        self.discount_amount = 0.0
+        if self.discount.get() > 0:
+            self.discount_amount = round(self.total_bill * (self.discount.get()/100.0), 2)
+            self.final_total = round(self.total_bill - self.discount_amount, 2)
+        else:
+            self.final_total = self.total_bill
 
     def welcome_bill(self):
         self.txtarea.delete('1.0', END)
         self.txtarea.insert(END, "\tWelcome Grocery Retail")
         self.txtarea.insert(END, f"\nBill Number:{self.bill_no.get()}")
         self.txtarea.insert(END, f"\nCustomer Name:{self.c_name.get()}")
-        self.txtarea.insert(END, f"\nPhone Number{self.c_phone.get()}")
+        # Add missing colon for phone label
+        self.txtarea.insert(END, f"\nPhone Number:{self.c_phone.get()}")
         self.txtarea.insert(END, f"\n================================")
         self.txtarea.insert(END, f"\nProducts\t\tQTY\t\tPrice")
 
     def bill_area(self):
-        if self.c_name.get() == " " or self.c_phone.get() == " ":
-            messagebox.showerror("Error", "Customer Details Are Must")
-        elif self.medical_price.get() == "Rs. 0.0" and self.grocery_price.get() == "Rs. 0.0" and self.cold_drinks_price.get()=="Rs. 0.0":
-            messagebox.showerror("Error", "No Product Purchased")
+        # Always (re)calculate totals before generating the bill
+        self.total()
+        # Validate customer details
+        if self.c_name.get().strip() == "" or self.c_phone.get().strip() == "":
+            messagebox.showerror("Error", "Customer details are required")
+            return
+        # Ensure there is at least one item purchased
+        if (self.total_medical_price == 0.0 and
+            self.total_grocery_price == 0.0 and
+            self.total_cold_drinks_price == 0.0):
+            messagebox.showerror("Error", "No product selected")
+            return
         else:
             self.welcome_bill()
     # ============medical===========================
@@ -300,7 +324,8 @@ class Bill_App:
         if self.hand_gloves.get() != 0:
             self.txtarea.insert(END, f"\n Hand Gloves\t\t{self.hand_gloves.get()}\t\t{self.m_h_g_p}")
         if self.syrup.get() != 0:
-            self.txtarea.insert(END, f"\n Syrup\t\t{self.syrup.get()}\t\t{self.m_s_p}")
+            # Correct price variable for syrup
+            self.txtarea.insert(END, f"\n Syrup\t\t{self.syrup.get()}\t\t{self.m_sy_p}")
         if self.cream.get() != 0:
             self.txtarea.insert(END, f"\n Cream\t\t{self.cream.get()}\t\t{self.m_c_p}")
         if self.thermal_gun.get() != 0:
@@ -328,19 +353,24 @@ class Bill_App:
         if self.coke.get() != 0:
             self.txtarea.insert(END, f"\n Coke\t\t{self.coke.get()}\t\t{self.c_d_c_p}")
         if self.lassi.get() != 0:
-            self.txtarea.insert(END, f"\n Lassi\t\t{self.cream.get()}\t\t{self.c_d_l_p}")
+            # Fix lassi quantity to use the correct variable
+            self.txtarea.insert(END, f"\n Lassi\t\t{self.lassi.get()}\t\t{self.c_d_l_p}")
         if self.mountain_duo.get() != 0:
-            self.txtarea.insert(END, f"\n Mountain Duo\t\t{self.sanitizer.get()}\t\t{self.c_m_d}")
+            # Fix mountain duo quantity to use the correct variable
+            self.txtarea.insert(END, f"\n Mountain Duo\t\t{self.mountain_duo.get()}\t\t{self.c_m_d}")
             self.txtarea.insert(END, f"\n--------------------------------")
     # ===============taxes==============================
-        if self.medical_tax.get() != '0.0':
+        if self.total_medical_price > 0.0:
             self.txtarea.insert(END, f"\n Medical Tax\t\t\t{self.medical_tax.get()}")
-        if self.grocery_tax.get() != '0.0':
+        if self.total_grocery_price > 0.0:
             self.txtarea.insert(END, f"\n Grocery Tax\t\t\t{self.grocery_tax.get()}")
-        if self.cold_drinks_tax.get() != '0.0':
+        if self.total_cold_drinks_price > 0.0:
             self.txtarea.insert(END, f"\n Cold Drinks Tax\t\t\t{self.cold_drinks_tax.get()}")
 
-        self.txtarea.insert(END, f"\n Total Bil:\t\t\t Rs.{self.total_bill}")
+        # ===============Discount==============================
+        if self.discount.get() > 0:
+            self.txtarea.insert(END, f"\n Discount ({self.discount.get()}%)\t\t\t-Rs.{self.discount_amount}")
+        self.txtarea.insert(END, f"\n Final Total:\t\t\t Rs.{self.final_total}")
         self.txtarea.insert(END, f"\n--------------------------------")
         self.save_bill()
 
@@ -348,23 +378,43 @@ class Bill_App:
         op = messagebox.askyesno("Save Bill", "Do you want to save the bill?")
         if op > 0:
             self.bill_data = self.txtarea.get('1.0', END)
-            f1 = open("bills/"+str(self.bill_no.get())+".txt", "w")
-            f1.write(self.bill_data)
-            f1.close()
+            # Ensure bills directory exists
+            bills_dir = "bills"
+            try:
+                os.makedirs(bills_dir, exist_ok=True)
+            except Exception as e:
+                messagebox.showerror("Error", f"Unable to create bills directory: {e}")
+                return
+            # Save file safely
+            file_path = os.path.join(bills_dir, f"{self.bill_no.get()}.txt")
+            try:
+                with open(file_path, "w", encoding="utf-8") as f1:
+                    f1.write(self.bill_data)
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to save bill: {e}")
+                return
             messagebox.showinfo("Saved", f"Bill no:{self.bill_no.get()} Saved Successfully")
         else:
            return
 
     def find_bill(self):
         present = "no"
-        for i in os.listdir("bills/"):
-            if i.split('.')[0] == self.search_bill.get():
-                f1 = open(f"bills/{i}", "r")
-                self.txtarea.delete("1.0", END)
-                for d in f1:
-                    self.txtarea.insert(END, d)
-                    f1.close()
-                present = "yes"
+        bills_dir = "bills"
+        if not os.path.isdir(bills_dir):
+            messagebox.showerror("Error", "No bills directory found")
+            return
+        for i in os.listdir(bills_dir):
+            if i.split('.')[0] == self.search_bill.get().strip():
+                file_path = os.path.join(bills_dir, i)
+                try:
+                    with open(file_path, "r", encoding="utf-8") as f1:
+                        self.txtarea.delete("1.0", END)
+                        self.txtarea.insert(END, f1.read())
+                    present = "yes"
+                    break
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to open bill: {e}")
+                    return
         if present == "no":
             messagebox.showerror("Error", "Invalid Bill No")
 
