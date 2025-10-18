@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enhanced Password Generator</title>
+    <link ref="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="generator">
+        <h2>Random Password Generator</h2>
+        Password Length:<input type="number" id="length" min="4" max="50" value="8">
+        <label><input type="checkbox" id="uppercase" checked> Include Uppercase Letters</label>
+        <label><input type="checkbox" id="lowercase" checked> Include Lowercase Letters</label>
+        <label><input type="checkbox" id="numbers" checked> Include Numbers</label>
+        <label><input type="checkbox" id="symbols"> Include Symbols</label>
+
+        <button onclick="generatePassword()">Generate Password</button>
+
+        <div class="password-output" id="passwordOutput">Your password will appear here</div>
+        <button class="copy-btn" onclick="copyPassword()">Copy to Clipboard</button>
+        <textfield id="strengthMeter" class="strength">Strength: N/A</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

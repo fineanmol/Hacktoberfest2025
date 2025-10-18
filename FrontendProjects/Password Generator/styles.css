@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+}
+.generator {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    max-width: 400px;
+    width: 100%;
+}
+input[type="number"] {
+    width: 60px;
+}
+label {
+    display: block;
+    margin: 10px 0;
+}
+button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.password-output {
+    margin-top: 20px;
+    font-size: 18px;
+    word-break: break-all;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 6px;
+    position: relative;
+}
+.copy-btn {
+    margin-top: 10px;
+    background: #007bff;
+}
+.strength {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.strength.weak {
+    color: red;
+}
+.strength.medium {
+    color: orange;
+}
+.strength.strong {
+    color: green;
+}
