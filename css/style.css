@@ -54,3 +54,8 @@ h4 {
   width: 21.87rem;
   height: 8.1rem;
 }
+
+h4 {
+  text-shadow: 0.2px 0.2px 14px #ff1493;
+}
+
