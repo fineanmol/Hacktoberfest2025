@@ -1903,7 +1903,7 @@ contributors = [
   },
   {
     id: 375,
-    fullname: "Haroon_Rashid",
+    fullname: "Muhammad_Haroon_Rashid",
     username: "https://github.com/MuhammadHaroonRashid",
   },
 ];
