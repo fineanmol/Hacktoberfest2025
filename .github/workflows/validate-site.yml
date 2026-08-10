@@ -9,7 +9,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    if: github.repository == 'fineanmol/Hacktoberfest2025'
+    if: github.repository == 'fineanmol/Hacktoberfest2026'
     steps:
       - name: Checkout
         uses: actions/checkout@v4

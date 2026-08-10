@@ -1,5 +1,5 @@
 (function (global) {
-  const FALLBACK = { owner: 'fineanmol', defaultRepoName: 'Hacktoberfest2025' };
+  const FALLBACK = { owner: 'fineanmol', defaultRepoName: 'Hacktoberfest2026' };
 
   function repoNameFromPath(meta) {
     const segment = window.location.pathname.split('/').filter(Boolean)[0];
