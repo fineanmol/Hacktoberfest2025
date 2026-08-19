@@ -1906,4 +1906,9 @@ contributors = [
     fullname: "Prajwal Ramgond",
     username: "https://github.com/PRAJWAL-RAMGOND",
   },
+  {
+    id: 376,
+    fullname: "Danish Basha",
+    username: "https://github.com/DanishBasha",
+  },
 ];
