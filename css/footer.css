@@ -195,3 +195,16 @@ footer {
     margin-bottom: 20px;
   }
 }
+
+.hack{
+  display: flex;
+  justify-content: center;
+}
+
+.hack2{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+}

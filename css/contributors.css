@@ -632,6 +632,7 @@ body {
   color: whitesmoke;
   border: none;
   transition: ease-out 0.4s;
+  margin-left: 10px;
 }
 .box #loadMore:hover {
   color: black;
