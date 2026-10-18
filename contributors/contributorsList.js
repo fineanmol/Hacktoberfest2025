@@ -1986,4 +1986,9 @@ contributors = [
     fullname: "Danish Basha",
     username: "https://github.com/DanishBasha",
   },
+  {
+    id: 392,
+    fullname: "Osinachi Nwagboso",
+    username: "https://github.com/sianachi",
+  },
 ];
