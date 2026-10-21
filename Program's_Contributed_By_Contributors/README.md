@@ -93,3 +93,92 @@ if __name__ == "__main__":
     print(f"Index: {result}")
 ```
 
+
+// ROBLOX PLAYER DATASTORE //
+
+```lua
+
+local DataStoreService = game:GetService("DataStoreService")
+local Players = game:GetService("Players")
+
+local playerDataStore = DataStoreService:GetDataStore("MiJuegoDatos_v1")
+
+local function getPlayerKey(player)
+    return "Player_" .. player.UserId
+end
+
+local function onPlayerAdded(player)
+    local success, savedData = pcall(function()
+        return playerDataStore:GetAsync(getPlayerKey(player))
+    end)
+
+    if not success then
+        warn("Could not load data for " .. player.Name .. ": " .. tostring(savedData))
+        player:Kick("Your data could not be loaded. Please rejoin.")
+        return
+    end
+
+    -- The player may have left while GetAsync was yielding.
+    if player.Parent ~= Players then
+        return
+    end
+
+    if type(savedData) ~= "table" then
+        savedData = {}
+    end
+
+    local coinsValue = tonumber(savedData.Coins) or 0
+    local levelValue = tonumber(savedData.Level) or 1
+
+    local leaderstats = Instance.new("Folder")
+    leaderstats.Name = "leaderstats"
+
+    local coins = Instance.new("IntValue")
+    coins.Name = "Coins"
+    coins.Value = math.max(0, math.floor(coinsValue))
+    coins.Parent = leaderstats
+
+    local level = Instance.new("IntValue")
+    level.Name = "Level"
+    level.Value = math.max(1, math.floor(levelValue))
+    level.Parent = leaderstats
+
+    leaderstats.Parent = player
+end
+
+local function savePlayerData(player)
+    local leaderstats = player:FindFirstChild("leaderstats")
+    if not leaderstats then
+        return
+    end
+
+    local coins = leaderstats:FindFirstChild("Coins")
+    local level = leaderstats:FindFirstChild("Level")
+    if not coins or not level then
+        warn("Could not save incomplete data for " .. player.Name)
+        return
+    end
+
+    local dataToSave = {
+        Coins = coins.Value,
+        Level = level.Value,
+    }
+
+    local success, err = pcall(function()
+        playerDataStore:SetAsync(getPlayerKey(player), dataToSave)
+    end)
+
+    if not success then
+        warn("Could not save data for " .. player.Name .. ": " .. tostring(err))
+    end
+end
+
+Players.PlayerAdded:Connect(onPlayerAdded)
+Players.PlayerRemoving:Connect(savePlayerData)
+
+game:BindToClose(function()
+    for _, player in ipairs(Players:GetPlayers()) do
+        savePlayerData(player)
+    end
+end)
+```
